@@ -21,11 +21,11 @@
                         <input type="date" id="auftragsDatum" name="auftragsDatum" placeholder="mm-dd-yyyy" value="2023-12-31">
 
                         <label for="zeit">Zeit:</label>
-                        <input type="text" id="zeit" name="zeit">
+                        <input type="text" id="zeit" name="zeit" placeholder="00:00">
                     </td>
                 </tr>
                 
-                <!-- Weitere fünf Reihen mit je zwei Spalten -->
+                <!-- Weitere Reihen mit je zwei Spalten -->
                 <tr>
                     <td>
                         <label for="kunde">Kunde:</label>
@@ -47,34 +47,37 @@
                 
                 <tr>
                     <td>
-                        <label for="menge">Menge:</label>
-                        <input type="number" id="menge" name="menge">
+                        <label for="kTelefon">Telefon:</label>
                     </td>
                     <td>
-                        <label for="preis">Preis:</label>
-                        <input type="text" id="preis" name="preis">
+                        <!-- TO-DO: richtig formattieren bitte-->
+                        <input type="tel" id="kTelefon" name="kTelefon">
                     </td>
                 </tr>
                 
                 <tr>
                     <td>
-                        <label for="lieferdatum">Lieferdatum:</label>
-                        <input type="date" id="lieferdatum" name="lieferdatum">
+                        <label for="kAdresseObj">Adresse Objekt:</label>
                     </td>
                     <td>
-                        <label for="zahlung">Zahlungsart:</label>
-                        <select id="zahlung" name="zahlung">
-                            <option value="paypal">PayPal</option>
-                            <option value="kreditkarte">Kreditkarte</option>
-                            <option value="ueberweisung">Überweisung</option>
-                        </select>
+                        <input type="text" id="kAdresseObj" name="kAdresseObj" placeholder="Adresse">
                     </td>
                 </tr>
                 
                 <tr>
-                    <td colspan="2">
-                        <label for="bemerkungen">Bemerkungen:</label>
-                        <textarea id="bemerkungen" name="bemerkungen"></textarea>
+                    <td>
+                        <label for="arbeiten">Auszuführende Arbeiten:</label>
+                    </td>
+                    <td>
+                        <input type="checkbox" id="reparatur" name="reparatur">
+                        <label for="reparatur">Reparatur</label>
+                        <input type="checkbox" id="sanitaer" name="sanitaer">
+                        <label for="sanitaer">Sanitär</label><br>
+
+                        <input type="checkbox" id="heizung" name="heizung">
+                        <label for="heizung">Heizung</label>
+                        <input type="checkbox" id="garantie" name="garantie">
+                        <label for="garantie">Garantie</label>
                     </td>
                 </tr>
             </table>
@@ -83,23 +86,13 @@
         <!-- Button zum Generieren/Drucken des Auftragsdokuments -->
         <button id="auftragDrucken">Auftragsdokument generieren/drucken</button>
 
-        <!-- Liste der Aufträge nach Zuständen -->
+        <!-- Liste aller Aufträge -->
         <div id="auftragsListe">
-            <h2>Aufträge nach Zuständen</h2>
+            <h2>Aufträge</h2>
             <!-- Hier wird die Liste der Aufträge nach Zuständen angezeigt -->
+            abc 1
+            abc2
         </div>
-
-        <!-- Formular zur Auftragsdisposition -->
-        <div id="auftragDisponieren">
-            <h2>Auftrag disponieren</h2>
-            <!-- Hier kommen die Eingabefelder für die Auftragsdisposition -->
-        </div>
-
-        <!-- Button zum Markieren eines Auftrags als ausgeführt -->
-        <button id="auftragAusgefuehrt">Auftrag als ausgeführt markieren</button>
-
-        <!-- Button zum Markieren eines Auftrags als verrechnet -->
-        <button id="auftragVerrechnet">Auftrag als verrechnet markieren</button>
     </div>
 
     <script src="script.js"></script>

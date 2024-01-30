@@ -35,12 +35,12 @@ table {
 /* Style for table cells */
 td {
     padding: 8px;
-    border: 1px solid #ddd;
+    border: 0px solid #ddd;
 }
 
 /* Style for labels */
 label {
-    display: block;
+    display: inline;
     margin-bottom: 6px;
     font-weight: bold;
 }
