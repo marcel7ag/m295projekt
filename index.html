@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Auftragsverwaltung</title>
+</head>
+<body>
+    <div class="container">
+        <h1>Auftragsverwaltung</h1>
+
+        <div id="auftragErfassen">
+            <h2>Auftrag erfassen</h2>
+            
+            <table>
+                <tr>
+                    <td colspan="3"> <!-- Erste Reihe mit 3 Spalten -->
+                        <!-- TO-DO: dd-mm--yyyy Format einbauen -->
+                        <label for="auftragsDatum">Auftragsdatum:</label>
+                        <input type="date" id="auftragsDatum" name="auftragsDatum" placeholder="mm-dd-yyyy" value="2023-12-31">
+
+                        <label for="zeit">Zeit:</label>
+                        <input type="text" id="zeit" name="zeit">
+                    </td>
+                </tr>
+                
+                <!-- Weitere fünf Reihen mit je zwei Spalten -->
+                <tr>
+                    <td>
+                        <label for="kunde">Kunde:</label>
+                        
+                        
+                    </td>
+                    <td>
+                        <select id="kAnrede">
+                            <option value="">Anrede</option>
+                            <option value="m">Herr</option>  
+                            <option value="f">Frau</option>  
+                        </select>
+                        <input type="text" id="kVorname" name="kVorname" placeholder="Vorname">
+                        <input type="text" id="kNachname" name="kNachname" placeholder="Nachname">
+                        <input type="text" id="kAdresse" name="kAdresse" placeholder="Adresse">
+                        <input type="text" id="kOrt" name="kOrt" placeholder="Ort">
+                    </td>
+                </tr>
+                
+                <tr>
+                    <td>
+                        <label for="menge">Menge:</label>
+                        <input type="number" id="menge" name="menge">
+                    </td>
+                    <td>
+                        <label for="preis">Preis:</label>
+                        <input type="text" id="preis" name="preis">
+                    </td>
+                </tr>
+                
+                <tr>
+                    <td>
+                        <label for="lieferdatum">Lieferdatum:</label>
+                        <input type="date" id="lieferdatum" name="lieferdatum">
+                    </td>
+                    <td>
+                        <label for="zahlung">Zahlungsart:</label>
+                        <select id="zahlung" name="zahlung">
+                            <option value="paypal">PayPal</option>
+                            <option value="kreditkarte">Kreditkarte</option>
+                            <option value="ueberweisung">Überweisung</option>
+                        </select>
+                    </td>
+                </tr>
+                
+                <tr>
+                    <td colspan="2">
+                        <label for="bemerkungen">Bemerkungen:</label>
+                        <textarea id="bemerkungen" name="bemerkungen"></textarea>
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <!-- Button zum Generieren/Drucken des Auftragsdokuments -->
+        <button id="auftragDrucken">Auftragsdokument generieren/drucken</button>
+
+        <!-- Liste der Aufträge nach Zuständen -->
+        <div id="auftragsListe">
+            <h2>Aufträge nach Zuständen</h2>
+            <!-- Hier wird die Liste der Aufträge nach Zuständen angezeigt -->
+        </div>
+
+        <!-- Formular zur Auftragsdisposition -->
+        <div id="auftragDisponieren">
+            <h2>Auftrag disponieren</h2>
+            <!-- Hier kommen die Eingabefelder für die Auftragsdisposition -->
+        </div>
+
+        <!-- Button zum Markieren eines Auftrags als ausgeführt -->
+        <button id="auftragAusgefuehrt">Auftrag als ausgeführt markieren</button>
+
+        <!-- Button zum Markieren eines Auftrags als verrechnet -->
+        <button id="auftragVerrechnet">Auftrag als verrechnet markieren</button>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
