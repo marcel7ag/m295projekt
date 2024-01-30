@@ -15,12 +15,19 @@
             
             <table>
                 <tr>
-                    <td colspan="3"> <!-- Erste Reihe mit 3 Spalten -->
+                    <td>
                         <!-- TO-DO: dd-mm--yyyy Format einbauen -->
                         <label for="auftragsDatum">Auftragsdatum:</label>
+                    </td>
+                    <td>
                         <input type="date" id="auftragsDatum" name="auftragsDatum" placeholder="mm-dd-yyyy" value="2023-12-31">
-
+                    </td>
+                </tr>
+                <tr>
+                    <td>
                         <label for="zeit">Zeit:</label>
+                    </td>
+                    <td>
                         <input type="text" id="zeit" name="zeit" placeholder="00:00">
                     </td>
                 </tr>
@@ -29,8 +36,6 @@
                 <tr>
                     <td>
                         <label for="kunde">Kunde:</label>
-                        
-                        
                     </td>
                     <td>
                         <select id="kAnrede">
@@ -41,7 +46,7 @@
                         <input type="text" id="kVorname" name="kVorname" placeholder="Vorname">
                         <input type="text" id="kNachname" name="kNachname" placeholder="Nachname">
                         <input type="text" id="kAdresse" name="kAdresse" placeholder="Adresse">
-                        <input type="text" id="kOrt" name="kOrt" placeholder="Ort">
+                        <input type="text" id="kOrt" name="kOrt" placeholder="Ort" style="width: 60%;"><input type="text" id="kPLZ" name="kPLZ" placeholder="PLZ" style="width: 39%; margin-left: 7px;">
                     </td>
                 </tr>
                 
@@ -60,8 +65,25 @@
                         <label for="adresseObj">Adresse Objekt:</label>
                     </td>
                     <td>
-                        <input type="text" id="adresseObj" name="adresseObj" placeholder="Adresse">
-                        <input type="text" id="ortObj" name="ortObj" placeholder="Ort">
+                        <input type="text" id="objAdresse" name="objAdresse" placeholder="Adresse">
+                        <input type="text" id="objOrt" name="objOrt" placeholder="Ort" style="width: 60%;"><input type="text" id="objPLZ" name="objPLZ" placeholder="PLZ" style="width: 39%; margin-left: 7px;">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label for="rechAdresse">Rechnungsadresse:</label>
+                    </td>
+                    <td>
+                        <select id="rechAnrede">
+                            <option value="">Anrede</option>
+                            <option value="rechM">Herr</option>  
+                            <option value="rechF">Frau</option>  
+                        </select>
+                        <input type="text" id="rechVorname" name="rechVorname" placeholder="Vorname">
+                        <input type="text" id="rechNachname" name="rechNachname" placeholder="Nachname">
+                        <input type="text" id="rechAdresse" name="rechAdresse" placeholder="Adresse">
+                        <input type="text" id="rechOrt" name="rechOrt" placeholder="Ort" style="width: 60%;"><input type="text" id="rechPLZ" name="rechPLZ" placeholder="PLZ" style="width: 39%; margin-left: 7px;">
+                        
                     </td>
                 </tr>
                 
@@ -79,12 +101,23 @@
                         <label for="heizung">Heizung</label>
                         <input type="checkbox" id="garantie" name="garantie">
                         <label for="garantie">Garantie</label>
+
+                        <textarea id="bemerkungen" name="bemerkungen" placeholder="Bemerkungen" style="height:80px;margin-top: 15px;"></textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label for="terminwunsch">Terminwunsch:</label>
+                    </td>
+                    <td>
+                        <textarea id="terminwunsch" name="terminwunsch" placeholder="Terminwunsch" style="height:80px;margin-top: 15px;"></textarea>
                     </td>
                 </tr>
             </table>
         </div>
 
         <!-- Button zum Generieren/Drucken des Auftragsdokuments -->
+
         <button id="auftragDrucken">Auftragsdokument generieren/drucken</button>
 
         <!-- Liste aller Aufträge -->
