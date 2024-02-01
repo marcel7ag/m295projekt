@@ -86,7 +86,6 @@
                         
                     </td>
                 </tr>
-                
                 <tr>
                     <td>
                         <label for="arbeiten">Auszuführende Arbeiten:</label>

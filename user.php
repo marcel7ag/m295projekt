@@ -20,7 +20,7 @@
             <table>
                 <tr>
                     <td>
-                        <label for="auftragserfassung">Auftragserfassung:</label>
+                        Auftragserfassung:
                     </td>
                     <td>
                         <input type="submit" id="auftragserfassung" name="action" value="Auftragserfassung">
@@ -28,7 +28,7 @@
                 </tr>
                 <tr>
                     <td>
-                        <label for="auftraege">Alle Aufträge anzeigen:</label>
+                        Alle Aufträge anzeigen:
                     </td>
                     <td>
                         <input type="submit" id="auftraege" name="action" value="Aufträge">
@@ -36,7 +36,7 @@
                 </tr>
                 <tr>
                     <td>
-                        <label for="oAuftraege">Offene Aufträge bearbeiten:</label>
+                        Offene Aufträge bearbeiten:
                     </td>
                     <td>
                         <input type="submit" id="oAuftraege" name="action" value="Offene Aufträge">
