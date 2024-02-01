@@ -51,13 +51,16 @@
             $action = $_POST['action'];
 
             if ($action == 'Auftragserfassung') {
-                echo "yoooo";
                 header("Location: erfassung.php");
+                exit();
+            }
+            else if ($action == 'Aufträge') {
+                header("Location: auftraege.php");
                 exit();
             }
         }
 
-        $conn->close();
+        $conn = null;
     ?>
 </body>
 </html>

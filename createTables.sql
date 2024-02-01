@@ -24,12 +24,7 @@ CREATE TABLE Orders (
     objAdresse VARCHAR(30) NOT NULL,
     objOrt VARCHAR(30) NOT NULL,
     objPLZ INT NOT NULL,
-    rechAnrede ENUM('Herr', 'Frau') NOT NULL,
-    rechName VARCHAR(30) NOT NULL,
-    rechVorname VARCHAR(30) NOT NULL,
-    rechAdresse VARCHAR(30) NOT NULL,
-    rechOrt VARCHAR(30) NOT NULL,
-    rechPLZ INT NOT NULL,
+    rechID INT NOT NULL,
     orderDate DATETIME NOT NULL,
     orderTime DATETIME NOT NULL,
     reparatur BOOLEAN,
@@ -43,5 +38,16 @@ CREATE TABLE Orders (
     completed BOOLEAN NOT NULL,
     completedDate DATETIME NOT NULL,
     FOREIGN KEY (kundenID) REFERENCES Kunden(id),
+     FOREIGN KEY (rechID) REFERENCES Rechnung(id),
     FOREIGN KEY (arbeiterID) REFERENCES Users(id)
+);
+
+CREATE TABLE Rechung (
+    ID INT NOT NULL PRIMARY KEY,
+    rAnrede ENUM('Herr', 'Frau') NOT NULL,
+    rName VARCHAR(30) NOT NULL,
+    rVorname VARCHAR(30) NOT NULL,
+    rAdresse VARCHAR(30) NOT NULL,
+    rOrt VARCHAR(30) NOT NULL,
+    rPLZ INT NOT NULL,
 );

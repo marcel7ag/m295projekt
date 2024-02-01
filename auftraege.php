@@ -4,10 +4,12 @@
 <?php
 require 'conn.php';
 session_start();
+
 $query = "SELECT * FROM orders";
+$stmt = $pdo->prepare($query);
+$stmt->execute();
 
-if ($result = $mysqli->query($query)) {
-
+if ($stmt->rowCount() > 0) {
     echo '<table border="0" cellspacing="2" cellpadding="2"> 
           <tr> 
               <td>ID</td>
@@ -21,7 +23,7 @@ if ($result = $mysqli->query($query)) {
               <td>Auftragdetails</td>
           </tr>';
 
-    while ($row = $result->fetch_assoc()) {
+    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
         $orderID = $row["orderID"];
         $kundenID = $row["kundenID"];
         $kundenName = $row["kundenName"];
@@ -43,8 +45,5 @@ if ($result = $mysqli->query($query)) {
                  <td><button id="'.$orderID.'">Details</button></td> 
               </tr>';
     }
-    $result->free();
 } 
-
-$mysqli->close();
 ?>
