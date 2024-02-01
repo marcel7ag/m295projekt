@@ -51,6 +51,7 @@ label {
 input[type="text"],
 input[type="number"],
 input[type="date"],
+input[type="password"],
 textarea,
 select {
     width: 100%;
@@ -73,7 +74,7 @@ button {
     cursor: pointer;
 }
 
-/* Optional: Add hover effect for buttons */
 button:hover {
     background-color: #0056b3;
+    transition: all 0.25s;
 }

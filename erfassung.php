@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="styleErfassung.css">
     <title>Auftragsverwaltung</title>
 </head>
 <body>
@@ -118,7 +118,7 @@
 
         <!-- Button zum Generieren/Drucken des Auftragsdokuments -->
 
-        <button id="auftragDrucken">Auftragsdokument generieren/drucken</button>
+        <button onclick="printDocument()" id="auftragDrucken">Auftragsdokument generieren/drucken</button>
 
         <!-- Liste aller Aufträge -->
         <div id="auftragsListe">

@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="styleIndex.css">
     <title>Login und Registration</title>
 </head>
 <body>
@@ -14,7 +14,7 @@
             Name: <input type="text" name="username"><br><br>
         </div>
         <div class="password-field">
-            Passwort: <input type="password" name="password" id="password">
+            Passwort: <input type="password" name="password" id="password"">
             <label>
                 <input type="checkbox" id="showPassword" onclick="toggleVisibility()"><label for="showPassword"></label>
                 Passwort anzeigen
