@@ -18,30 +18,66 @@
             <div id="auftragErfassen">
             <h2>Tools</h2>  
             <table>
-                <tr>
-                    <td>
-                        Auftragserfassung:
-                    </td>
-                    <td>
-                        <input type="submit" id="auftragserfassung" name="action" value="Auftragserfassung">
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        Alle Aufträge anzeigen:
-                    </td>
-                    <td>
-                        <input type="submit" id="auftraege" name="action" value="Aufträge">
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        Offene Aufträge bearbeiten:
-                    </td>
-                    <td>
-                        <input type="submit" id="oAuftraege" name="action" value="Offene Aufträge">
-                    </td>
-                </tr>
+                <?php
+                    if ($_SESSION["role"] == 'ADMIN') {
+                        echo   '
+                                <tr>
+                                    <td>
+                                        Auftragserfassung:
+                                    </td>
+                                    <td>
+                                        <input type="submit" id="auftragserfassung" name="action" value="Auftragserfassung">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        Alle Aufträge anzeigen:
+                                    </td>
+                                    <td>
+                                        <input type="submit" id="auftraege" name="action" value="Aufträge">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        Offene Aufträge bearbeiten:
+                                    </td>
+                                    <td>
+                                        <input type="submit" id="oAuftraege" name="action" value="Offene Aufträge">
+                                    </td>
+                                </tr>';
+                    }
+                    else if ($_SESSION["role"] == 'MANAGER') {
+                        echo   '
+                                <tr>
+                                    <td>
+                                        Auftragsplanung:
+                                    </td>
+                                    <td>
+                                        <input type="submit" id="auftraege" name="action" value="Aufträge">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        Offene Aufträge bearbeiten:
+                                    </td>
+                                    <td>
+                                        <input type="submit" id="oAuftraege" name="action" value="Offene Aufträge">
+                                    </td>
+                                </tr>';
+                    }
+                    else if ($_SESSION["role"] == 'ARBEITER') {
+                        echo   '
+                                <tr>
+                                    <td>
+                                        Ihre offenen Aufträge bearbeiten:
+                                    </td>
+                                    <td>
+                                        <input type="submit" id="oAuftraege" name="action" value="Aufträge">
+                                    </td>
+                                </tr>';
+                    }
+                ?>
+                
             </table>
         </div>
     </form>

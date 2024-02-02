@@ -51,7 +51,7 @@
                 $password = $_POST['password'];
 
                         // Prepare a SELECT statement
-                $stmt = $pdo->prepare("SELECT id, password FROM users WHERE username = ?");
+                $stmt = $pdo->prepare("SELECT id, password, role FROM users WHERE username = ?");
                 $stmt->bindValue(1, $username);
                 // Execute the statement
                 $stmt->execute();
@@ -66,12 +66,12 @@
                         // Assign the fetched ID to the session ID
                         $_SESSION["id"] = $row['id'];
                         $_SESSION["name"] = $username;
+                        $role = $row['role'];
+                        $_SESSION["role"] = $role;
 
-                        if($row['role'] = 'admin') {
-                            header("Location: user.php");
-                            exit();
-                        }
-                        $_SESSION["attempt"] = 0;
+                        header("Location: user.php");
+                        exit();
+                           
                     } else {
                         $_SESSION["attempt"]++;
                         $message = "Name oder Passwort ungültig.";

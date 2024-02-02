@@ -1,12 +1,12 @@
 CREATE TABLE Users (
-    id INT PRIMARY KEY,
+    id INT PRIMARY KEY AUTO_INCREMENT,
     username VARCHAR(30) NOT NULL,
     password VARCHAR(60) NOT NULL,
     role ENUM('ADMIN', 'MANAGER', 'ARBEITER')
 );
 
 CREATE TABLE Kunden (
-    id INT PRIMARY KEY,
+    id INT PRIMARY KEY AUTO_INCREMENT,
     kName VARCHAR(30) NOT NULL,
     kVorname VARCHAR(30) NOT NULL,
     kAdresse VARCHAR(30) NOT NULL,
@@ -17,7 +17,7 @@ CREATE TABLE Kunden (
 );
 
 CREATE TABLE Rechnung (
-    ID INT PRIMARY KEY,
+    ID INT PRIMARY KEY AUTO_INCREMENT,
     rAnrede ENUM('Herr', 'Frau') NOT NULL,
     rName VARCHAR(30) NOT NULL,
     rVorname VARCHAR(30) NOT NULL,
@@ -27,7 +27,7 @@ CREATE TABLE Rechnung (
 );
 
 CREATE TABLE Orders (
-    orderID INT PRIMARY KEY,
+    orderID INT PRIMARY KEY AUTO_INCREMENT,
     kundenID INT NOT NULL,
     kundenName VARCHAR(30) NOT NULL,
     objAdresse VARCHAR(30) NOT NULL,
