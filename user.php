@@ -72,7 +72,7 @@
                                         Ihre offenen Aufträge bearbeiten:
                                     </td>
                                     <td>
-                                        <input type="submit" id="oAuftraege" name="action" value="Aufträge">
+                                        <input type="submit" id="oAuftraege" name="action" value="Offene    Aufträge">
                                     </td>
                                 </tr>';
                     }
@@ -92,6 +92,10 @@
             }
             else if ($action == 'Aufträge') {
                 header("Location: auftraege.php");
+                exit();
+            }
+            else if ($action == 'Offene Aufträge') {
+                header("Location: oAuftraege.php");
                 exit();
             }
         }

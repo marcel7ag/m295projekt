@@ -79,8 +79,10 @@ button:hover {
     transition: all 0.25s;
 }
 
-.tableT{
+.tableT td{
     font-weight: bold;
+    font-size: 14px;
+    width: 1px; /* Minimal width */
 }
 
 .modal {
@@ -107,3 +109,7 @@ button:hover {
 }
 
 #closeSpan{cursor: pointer;}
+
+#tablee{
+    font-size: 12px;
+}

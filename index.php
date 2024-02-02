@@ -71,7 +71,6 @@
 
                         header("Location: user.php");
                         exit();
-                           
                     } else {
                         $_SESSION["attempt"]++;
                         $message = "Name oder Passwort ungültig.";
