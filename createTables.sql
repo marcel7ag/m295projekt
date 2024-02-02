@@ -2,8 +2,7 @@ CREATE TABLE Users (
     id INT PRIMARY KEY,
     username VARCHAR(30) NOT NULL,
     password VARCHAR(60) NOT NULL,
-    role ENUM('ADMIN', 'MANAGER', 'ARBEITER'),
-    description VARCHAR(50)
+    role ENUM('ADMIN', 'MANAGER', 'ARBEITER')
 );
 
 CREATE TABLE Kunden (
@@ -15,6 +14,16 @@ CREATE TABLE Kunden (
     kPLZ INT NOT NULL,
     kTelefon VARCHAR(30),
     kGender ENUM('FEMALE', 'MALE')
+);
+
+CREATE TABLE Rechnung (
+    ID INT PRIMARY KEY,
+    rAnrede ENUM('Herr', 'Frau') NOT NULL,
+    rName VARCHAR(30) NOT NULL,
+    rVorname VARCHAR(30) NOT NULL,
+    rAdresse VARCHAR(30) NOT NULL,
+    rOrt VARCHAR(30) NOT NULL,
+    rPLZ INT NOT NULL
 );
 
 CREATE TABLE Orders (
@@ -38,16 +47,6 @@ CREATE TABLE Orders (
     completed BOOLEAN NOT NULL,
     completedDate DATETIME NOT NULL,
     FOREIGN KEY (kundenID) REFERENCES Kunden(id),
-     FOREIGN KEY (rechID) REFERENCES Rechnung(id),
+    FOREIGN KEY (rechID) REFERENCES Rechnung(id),
     FOREIGN KEY (arbeiterID) REFERENCES Users(id)
-);
-
-CREATE TABLE Rechung (
-    ID INT NOT NULL PRIMARY KEY,
-    rAnrede ENUM('Herr', 'Frau') NOT NULL,
-    rName VARCHAR(30) NOT NULL,
-    rVorname VARCHAR(30) NOT NULL,
-    rAdresse VARCHAR(30) NOT NULL,
-    rOrt VARCHAR(30) NOT NULL,
-    rPLZ INT NOT NULL,
 );

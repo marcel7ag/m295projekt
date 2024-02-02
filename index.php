@@ -66,9 +66,12 @@
                         // Assign the fetched ID to the session ID
                         $_SESSION["id"] = $row['id'];
                         $_SESSION["name"] = $username;
+
+                        if($row['role'] = 'admin') {
+                            header("Location: user.php");
+                            exit();
+                        }
                         $_SESSION["attempt"] = 0;
-                        header("Location: user.php");
-                        exit();
                     } else {
                         $_SESSION["attempt"]++;
                         $message = "Name oder Passwort ungültig.";
