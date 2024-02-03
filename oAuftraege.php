@@ -42,17 +42,17 @@
             $heizung = "nein";
             $garantie = "nein";
             $zustand = "nein";
+            $color;
             
             if ($row["reparatur"]){$reparatur = "ja";}
             if ($row["sanitaer"]){$sanitaer = "ja";}
             if ($row["heizung"]){$heizung = "ja";}
             if ($row["garantie"]){$garantie = "ja";}
+            
 
-            $color;
-
-            if($zustand == "INPROGRESS"){$color = "blue";}
-                else if($zustand == "TODO"){$color = "orange";}
-                else if($zustand == "COMPLETED"){$color = "green";}
+            if($row["zustand"] == "INPROGRESS"){$color = "blue";}
+                else if($row["zustand"] == "TODO"){$color = "orange";}
+                else if($row["zustand"] == "COMPLETED"){$color = "green";}
 
                 echo '<tr> 
                 <td>'.$orderID.'</td> 
