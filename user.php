@@ -39,7 +39,7 @@
                                 </tr>
                                 <tr>
                                     <td>
-                                        Offene Aufträge bearbeiten:
+                                        Ihre offenen Aufträge bearbeiten:
                                     </td>
                                     <td>
                                         <input type="submit" id="oAuftraege" name="action" value="Offene Aufträge">
@@ -72,7 +72,7 @@
                                         Ihre offenen Aufträge bearbeiten:
                                     </td>
                                     <td>
-                                        <input type="submit" id="oAuftraege" name="action" value="Offene    Aufträge">
+                                        <input type="submit" id="oAuftraege" name="action" value="Offene Aufträge">
                                     </td>
                                 </tr>';
                     }
