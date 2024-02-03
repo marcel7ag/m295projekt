@@ -40,13 +40,13 @@
             $sanitaer = $row["sanitaer"];
             $heizung = $row["heizung"];
             $garantie = $row["garantie"];
-            $zustand = $row["zustand"];
-            
+            $zustand;
             $color;
+            
 
-            if($zustand == "INPROGRESS"){$color = "blue";}
-                else if($zustand == "TODO"){$color = "orange";}
-                else if($zustand == "COMPLETED"){$color = "green";}
+            if($row["zustand"] == "INPROGRESS"){$color = "blue"; $zustand = "in Bearbeitung";}
+                else if($row["zustand"] == "TODO"){$color = "orange"; $zustand = "Zu Bearbeiten";}
+                else if($row["zustand"] == "COMPLETED"){$color = "green"; $zustand = "Abgeschlossen";}
 
                 echo '<tr> 
                 <td>'.$orderID.'</td> 

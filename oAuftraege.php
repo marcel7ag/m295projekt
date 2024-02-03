@@ -41,6 +41,7 @@
             $sanitaer = "nein";
             $heizung = "nein";
             $garantie = "nein";
+            $zustand;
             $color;
             
             if ($row["reparatur"]){$reparatur = "ja";}
