@@ -1,0 +1,74 @@
+/* General styles */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+    margin: 0;
+    padding: 0;
+}
+
+/* Form styles */
+form {
+    width: 300px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.1);
+}
+
+/* Input field styles */
+input[type="text"], input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+}
+
+/* Submit button styles */
+input[type="submit"] {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 4px;
+    border: none;
+    background-color: #007BFF;
+    color: #fff;
+    cursor: pointer;
+}
+
+input[type="submit"]:hover {
+    background-color: #0056b3;
+}
+
+/* Checkbox styles */
+#showPassword {
+    margin-left: 10px;
+}
+
+/* Popup window styles */
+#windowpopup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 300px;
+    height: 200px;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.1);
+    display: none;
+}
+/* msgDiv styles */
+#msgDisplay {
+    width: 300px;
+    padding: 10px;
+    margin: 10px auto;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    background-color: #ffffff;
+    text-align: center;
+    color: #000;
+    font-size: 14px;
+    height: 60px;
+}

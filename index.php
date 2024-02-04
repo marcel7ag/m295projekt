@@ -1,147 +1,141 @@
+<?php
+require_once 'db/createTables.php';
+session_start();
+
+$action = $_POST['action'] ?? null;
+$username = $_POST['username'] ?? null;
+$password = $_POST['password'] ?? null;
+
+// wait for user input
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    if ($action == 'Login') {
+        manageLoginAttempts();
+        authenticateUser();
+    } elseif ($action == 'Registrieren') {
+        validateAndRegisterUser();
+    }
+}
+
+function manageLoginAttempts() { // 3 attempts allowed currently not working
+    global $message;
+    if (!isset($_SESSION['attempt'])) {
+        $_SESSION['attempt'] = 0;
+    }
+    if ($_SESSION['attempt'] >= 3) {
+        $message = "Sie haben schon 3 Fehlversuche erreicht. Ihr Konto ist gesperrt.";
+    }
+}
+
+function authenticateUser() {
+    global $username, $password, $message;
+    $stmt = $GLOBALS['pdo']->prepare("SELECT id, password, role FROM users WHERE username = ?");
+    $stmt->bindValue(1, $username);
+    $stmt->execute();
+    $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    if ($row && strcmp($password, $row['password']) == 0) {
+        $_SESSION["id"] = $row['id'];
+        $_SESSION["name"] = $username;
+        $_SESSION["role"] = $row['role'];
+        header("Location: user.php");
+        exit();
+    } else {
+        $_SESSION['attempt']++;
+        $message = "Name oder Passwort ungültig.";
+    }
+    $stmt = null;
+}
+
+function validateAndRegisterUser() {
+    global $password, $username, $message;
+
+    // check if username is already taken
+    $stmt = $GLOBALS['pdo']->prepare("SELECT id FROM users WHERE username = ?");
+    $stmt->bindValue(1, $username);
+    $stmt->execute();
+    if ($stmt->rowCount() > 0) {
+        $message = "Name bereits vergeben.";
+        return;
+    }
+    // create password rules: 10char, 1 upper, 1 lower, 1 number, 1 special char
+    if (!preg_match('/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+}{":;\'?\/>.<,])(?=.{10,})/', $password)) {
+        $message = "Passwort entspricht nicht den Anforderungen.";
+        return;
+    }
+    
+
+    try {
+        $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+        $stmt = $GLOBALS['pdo']->prepare("INSERT INTO users (username, password) VALUES (:username, :password)");
+        $stmt->bindValue(':username', $username);
+        $stmt->bindValue(':password', $hashedPassword);
+        $stmt->execute();            
+
+        if ($stmt->rowCount() > 0) {
+            $message = "Konto erfolgreich erstellt.";
+        } else {
+            throw new Exception("Fehler beim Erstellen des Kontos.");
+        }
+    } catch (Exception $e) {
+        $message = $e->getMessage();
+    }
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <link rel="stylesheet" href="styleIndex.css">
-    <title>Login und Registration</title>
-</head>
-<body>
-    <form method="post">
-        <h1>Registrieren oder Login</h1>
-        <div class="name-field">
-            Name: <input type="text" name="username"><br><br>
-        </div>
-        <div class="password-field">
-            Passwort: <input type="password" name="password" id="password"">
-            <label>
-                <input type="checkbox" id="showPassword" onclick="toggleVisibility()"><label for="showPassword"></label>
-                Passwort anzeigen
-            </label>
-        </div>
-        <br><br>
-        <input type="submit" name="action" value="Login">
-        <input type="submit" name="action" value="Registrieren">
-    </form>
-    <div id="windowpopup" class="windowpopup"></div>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <link rel="stylesheet" href="style/style.css">
+        <title>Login und Registration</title>
+    </head>
+    <body>
 
-    <?php
-    require "conn.php";
-    session_start();
-    if ($_SERVER["REQUEST_METHOD"] == "POST") {
-
-        $action = $_POST['action'];
-
-        if ($action == 'Login') {
-            if (!isset($_SESSION['attempt'])) {
-                $_SESSION['attempt'] = 0;
-            }
-            if ($_SESSION['attempt'] >= 3) {
-                $message = "Sie haben schon 3 Fehlversuche erreicht. Ihr Konto ist gesperrt.";
-                        echo '<script type="text/javascript">
-                            $("#windowpopup").html("' . $message . '");
-                            $("#windowpopup").show();
-                            setTimeout(function() {
-                                $("#windowpopup").addClass("faded-out");
-                            }, 5000);
-                        </script>';
-            } else {
-                $username = $_POST['username'];
-                $password = $_POST['password'];
-
-                        // Prepare a SELECT statement
-                $stmt = $pdo->prepare("SELECT id, password, role FROM users WHERE username = ?");
-                $stmt->bindValue(1, $username);
-                // Execute the statement
-                $stmt->execute();
-                // Bind the result to variables
-                $row = $stmt->fetch(PDO::FETCH_ASSOC);
-
-                // Fetch the result
-                if ($row) {
-                    // Check if the password is correct
-                    if (strcmp($password, $row['password']) == 0) {
-
-                        // Assign the fetched ID to the session ID
-                        $_SESSION["id"] = $row['id'];
-                        $_SESSION["name"] = $username;
-                        $role = $row['role'];
-                        $_SESSION["role"] = $role;
-
-                        header("Location: user.php");
-                        exit();
-                    } else {
-                        $_SESSION["attempt"]++;
-                        $message = "Name oder Passwort ungültig.";
-                        echo '<script type="text/javascript">
-                            $("#windowpopup").html("' . $message . '");
-                            $("#windowpopup").show();
-                            setTimeout(function() {
-                                $("#windowpopup").addClass("faded-out");
-                            }, 5000);
-                        </script>';
-                    }
-                }
-                // Close the statement
-                $stmt = null;
-            }
-        }
-        elseif ($action == 'Registrieren') {
-
-            $password = $_POST['password'];
-            $username = $_POST['username'];
-
-            if (!preg_match("/^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*\W).{10,}$/", $password)) {
-                $errorMessage = "Passwort ungültig.<br>Das Passwort muss mindestens 10 Zeichen lang sein, 1 Gross- und Kleinbuchstaben, sowie 1 Sonderzeichen und 1 Zahl beinhalten.";
-                echo '<script type="text/javascript">
-                    $("#windowpopup").html("' . $errorMessage . '");
-                    $("#windowpopup").show();
-                    setTimeout(function() {
-                        $("#windowpopup").addClass("faded-out");
-                    }, 5000);
-                </script>';
-                exit();
-            }
-
-            $stmt = $pdo->prepare("INSERT INTO users (username,password) VALUES (:username, :password)");
-            $stmt->bindValue(':username', $username);
-            $stmt->bindValue(':password', $password);
-            $stmt->execute();            
-
-            if ($stmt->rowCount() > 0) {
-                $message = "Konto erfolgreich erstellt.";
-                echo '<script type="text/javascript">
-                    $("#windowpopup").html("' . $message . '");
-                    $("#windowpopup").show();
-                    setTimeout(function() {
-                        $("#windowpopup").addClass("faded-out");
-                    }, 5000);
-                </script>';
-            } else {
-                echo "Error: " . $pdo->errorInfo();
-            }      
-        }
-    }
-?>
-
-
+            <!-- USER INTERFACE HERE FROM template.php-->
+            <?php
+            require 'header.php'; // only header tag with navigation & logout button
+            ?>
+        <form method="post">
+            <h1>Registrieren oder Login</h1>
+            <div class="name-field">
+                Name: <input type="text" name="username"><br><br>
+            </div>
+            <div class="password-field">
+                Passwort: <input type="password" name="password" id="password">
+                <label>
+                    <input type="checkbox" id="showPassword" onclick="toggleVisibility()"><label for="showPassword"></label>
+                    Passwort anzeigen
+                </label>
+            </div>
+            <br><br>
+            <input type="submit" name="action" value="Login">
+            <input type="submit" name="action" value="Registrieren">
+            
+        </form>
+        <div id="msgDisplay"></div>
+    </body>
+</html>
 <script>
-    //Funktion für die Sichtoption beim Passwort-Eingabefeld
+    // function to toggle password visibility btn
     function toggleVisibility() {
         var passwordInput = document.getElementById("password");
-
-        if (passwordInput.type === "password") {
-            passwordInput.type = "text";
-        } else {
-            passwordInput.type = "password";
-        }
+        passwordInput.type = passwordInput.type === "password" ? "text" : "password";
     }
     $(document).ready(function(){
         $(".windowpopup").click(function(){
             $(this).hide();
         });
     });
+
+    // Added code to handle popup messages in the msgDisplay div
+    <?php if(isset($message)): ?>
+    $(document).ready(function(){
+        $("#msgDisplay").html("<?php echo $message; ?>");
+        $("#msgDisplay").show();
+        setTimeout(function() {
+            $("#msgDisplay").addClass("faded-out");
+        }, 5000);
+    });
+    <?php endif; ?>
 </script>
-</body>
-</html>

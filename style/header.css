@@ -1,0 +1,39 @@
+/* Reset margins and paddings */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Style the navigation bar */
+nav {
+    background-color: teal;
+    color: #fff;
+    padding: 20px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+/* Style the list items */
+nav ul {
+    list-style-type: none;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width: 100%;
+}
+
+/* Style the links */
+nav ul li a {
+    color: #fff;
+    text-decoration: none;
+    padding: 10px;
+    transition: background-color 0.3s ease;
+}
+
+/* Change link color on hover */
+nav ul li a:hover {
+    background-color: #4c9e9e;
+    border-radius: 5px;
+}
