@@ -1,15 +1,27 @@
+<?php
+// erfassung.php
+session_start();
+include 'header.php';
+
+// Überprüfen, ob Benutzer angemeldet ist
+if (!isset($_SESSION["name"])) {
+    header("Location: index.php");
+    exit();
+}
+
+?>
 <!DOCTYPE html>
 <html lang="de">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style/styleErfassung.css">
+    <link rel="stylesheet" href="style/auftragerfassen.css"> 
     <title>Auftragsverwaltung</title>
 </head>
 <body>
     <div class="container">
         <h1>Auftragsverwaltung</h1>
-
+        <!-- Rest des HTML-Codes... -->
         <div id="auftragErfassen">
             <h2>Auftrag erfassen</h2>
             
@@ -115,19 +127,8 @@
             </table>
         </div>
 
-        <!-- Button zum Generieren/Drucken des Auftragsdokuments -->
 
-        <button onclick="printDocument()" id="auftragDrucken">Auftragsdokument generieren/drucken</button>
-
-        <!-- Liste aller Aufträge -->
-        <div id="auftragsListe">
-            <h2>Aufträge</h2>
-            <!-- Hier wird die Liste der Aufträge nach Zuständen angezeigt -->
-            abc 1
-            abc2
-        </div>
+        <script src="script.js"></script>
     </div>
-
-    <script src="script.js"></script>
 </body>
 </html>

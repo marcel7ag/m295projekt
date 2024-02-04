@@ -1,12 +1,11 @@
-<?php
-require_once 'db/createTables.php';
+<?php // index.php
 session_start();
-
+require_once 'db/createTables.php';
 $action = $_POST['action'] ?? null;
 $username = $_POST['username'] ?? null;
 $password = $_POST['password'] ?? null;
 
-// wait for user input
+// wait for user input -> login form
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if ($action == 'Login') {
         manageLoginAttempts();
@@ -15,8 +14,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         validateAndRegisterUser();
     }
 }
-
-function manageLoginAttempts() { // 3 attempts allowed currently not working
+#TODO: fix 3 times attempt!!!
+function manageLoginAttempts() { 
     global $message;
     if (!isset($_SESSION['attempt'])) {
         $_SESSION['attempt'] = 0;
@@ -81,6 +80,7 @@ function validateAndRegisterUser() {
     }
 }
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -94,7 +94,7 @@ function validateAndRegisterUser() {
 
             <!-- USER INTERFACE HERE FROM template.php-->
             <?php
-            require 'header.php'; // only header tag with navigation & logout button
+            include 'header.php'; // only header tag with navigation & logout button
             ?>
         <form method="post">
             <h1>Registrieren oder Login</h1>
@@ -116,6 +116,8 @@ function validateAndRegisterUser() {
         <div id="msgDisplay"></div>
     </body>
 </html>
+
+
 <script>
     // function to toggle password visibility btn
     function toggleVisibility() {
@@ -139,3 +141,4 @@ function validateAndRegisterUser() {
     });
     <?php endif; ?>
 </script>
+

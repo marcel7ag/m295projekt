@@ -1,0 +1,54 @@
+/* style2.css */
+
+#auftragErfassen {
+    width: 100%;
+    max-width: 600px;
+    margin: auto;
+}
+
+#auftragErfassen h2 {
+    text-align: center;
+    padding: 20px 0;
+}
+
+#auftragErfassen table {
+    width: 100%;
+    border-collapse: collapse;
+    border: 1px solid #ddd;
+}
+
+#auftragErfassen table th {
+    background-color: #4caf50;
+    color: white;
+}
+
+#auftragErfassen table, th, td {
+    padding: 8px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+#auftragErfassen table tr:hover {background-color:#f5f5f5;}
+
+#auftragErfassen input[type="date"],
+#auftragErfassen input[type="text"],
+#auftragErfassen input[type="tel"],
+#auftragErfassen select,
+#auftragErfassen textarea {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    resize: vertical;
+}
+
+#auftragErfassen .checkbox-group label {
+    display: inline-block;
+    margin-right: 10px;
+}
+
+#auftragErfassen textarea {
+    resize: none;
+}

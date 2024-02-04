@@ -1,3 +1,18 @@
+<?php // auftraege.php
+session_start();
+include 'header.php';
+include 'db/conn.php';
+// check if user is logged in
+if (!isset($_SESSION["name"])) {
+    header("Location: index.php");
+    exit();
+}
+// debug
+var_dump($_SESSION);
+
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -24,8 +39,7 @@
     <!--------->
     <?php
     require 'db/conn.php';
-    session_start();
-
+    
     $query = "SELECT * FROM orders";
     $stmt = $pdo->prepare($query);
     $stmt->execute();

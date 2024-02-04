@@ -1,9 +1,15 @@
-<?php
-    // Path: user.php
-    require_once 'db/conn.php';
+<?php // user.php
     session_start();
-    // include header file
+    include 'db/conn.php';
     include 'header.php';
+    // debug
+    var_dump($_SESSION);
+    // check if user is logged in
+    if (!isset($_SESSION["name"])) {
+        header("Location: index.php");
+        exit();
+    }
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -56,33 +62,40 @@
                 </div>
             </div>
         </form>
-
-    
     </body>
 </html>
 
 <?php // for user.php
-        if ($_SERVER["REQUEST_METHOD"] == "POST") {
-            $action = $_POST['action'];
-            // bt Order Entry
-            if ($action == 'Order Entry') {
-                header("Location: erfassung.php");
-                exit();
-            } // bt Orders
-            else if ($action == 'Orders') {
-                header("Location: auftraege.php");
-                exit();
-            } // bt Open Orders
-            else if ($action == 'Open Orders') {
-                header("Location: oAuftraege.php");
-                exit();
-            } // bt Logout
-            elseif ($action == 'Logout') {
-                session_destroy();
-                header("Location: index.php");
-                exit();
-            }
-        }
 
-        $conn = null;
-    ?>
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $action = $_POST['action'];
+    // bt Order Entry
+    if ($action == 'Order Entry') {
+        echo "Order Entry";
+        // PROBLEM: Session data is not passed to the next page
+        header("Location: erfassung.php");
+        exit();
+    } // bt Orders
+    else if ($action == 'Orders') {
+        echo "Orders";
+        header("Location: auftraege.php");
+        exit();
+    } // bt Open Orders
+    else if ($action == 'Open Orders') {
+        echo "Open Orders";
+        header("Location: oAuftraege.php");
+        exit();
+    } // bt Logout
+    else if ($action == 'Logout') {
+        echo "Logout";
+        session_unset();
+        session_destroy();
+        header("Location: index.php");
+        exit();
+    }
+    
+}
+
+
+$conn = null;
+?>
