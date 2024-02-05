@@ -1,8 +1,6 @@
-<?php
-// erfassung.php
+<?php // erfassung.php
 session_start();
 include 'header.php';
-
 // Überprüfen, ob Benutzer angemeldet ist
 if (!isset($_SESSION["name"])) {
     header("Location: index.php");
@@ -12,80 +10,59 @@ if (!isset($_SESSION["name"])) {
 ?>
 <!DOCTYPE html>
 <html lang="de">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style/auftragerfassen.css"> 
-    <title>Auftragsverwaltung</title>
-</head>
-<body>
-    <div class="container">
-        <h1>Auftragsverwaltung</h1>
-        <!-- Rest des HTML-Codes... -->
-        <div id="auftragErfassen">
-            <h2>Auftrag erfassen</h2>
-            
-            <table>
-                <tr>
-                    <td>
-                        <!-- TO-DO: dd-mm--yyyy Format einbauen -->
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="style/auftragerfassen.css"> 
+        <title>Auftragsverwaltung</title>
+    </head>
+    <body>
+        <div class="container">
+            <h1>Auftragsverwaltung</h1>
+            <!-- Rest des HTML-Codes... -->
+            <div id="auftragErfassen">
+                <h2>Auftrag erfassen</h2>
+                    <form method="post">
+
+                    <div class="form-group">
                         <label for="auftragsDatum">Auftragsdatum:</label>
-                    </td>
-                    <td>
                         <input type="date" id="auftragsDatum" name="auftragsDatum" placeholder="mm-dd-yyyy" value="2023-12-31">
-                    </td>
-                </tr>
-                <tr>
-                    <td>
+                    </div>
+
+                    <div class="form-group">
                         <label for="zeit">Zeit:</label>
-                    </td>
-                    <td>
                         <input type="text" id="zeit" name="zeit" placeholder="00:00">
-                    </td>
-                </tr>
-                
-                <!-- Weitere Reihen mit je zwei Spalten -->
-                <tr>
-                    <td>
+                    </div>
+
+                    <div class="form-group">
                         <label for="kunde">Kunde:</label>
-                    </td>
-                    <td>
-                        <select id="kAnrede">
-                            <option value="">Anrede</option>
-                            <option value="m">Herr</option>  
-                            <option value="f">Frau</option>  
-                        </select>
+                        <div class="customer-info">
+                            <select id="kAnrede" name="kAnrede">
+                                <option value="">Anrede</option>
+                                <option value="m">Herr</option>  
+                                <option value="f">Frau</option>  
+                            </select>
+                            <input type="text" id="kundenID" name="kundenID" placeholder="Kunden ID">
+                        </div>
                         <input type="text" id="kVorname" name="kVorname" placeholder="Vorname">
                         <input type="text" id="kNachname" name="kNachname" placeholder="Nachname">
                         <input type="text" id="kAdresse" name="kAdresse" placeholder="Adresse">
                         <input type="text" id="kOrt" name="kOrt" placeholder="Ort" style="width: 60%;"><input type="text" id="kPLZ" name="kPLZ" placeholder="PLZ" style="width: 39%; margin-left: 7px;">
-                    </td>
-                </tr>
-                
-                <tr>
-                    <td>
+                    </div>
+
+                    <div class="form-group">
                         <label for="kTelefon">Telefon:</label>
-                    </td>
-                    <td>
-                        <!-- TO-DO: richtig formattieren bitte-->
                         <input type="tel" id="kTelefon" name="kTelefon">
-                    </td>
-                </tr>
-                
-                <tr>
-                    <td>
+                    </div>
+
+                    <div class="form-group">
                         <label for="adresseObj">Adresse Objekt:</label>
-                    </td>
-                    <td>
                         <input type="text" id="objAdresse" name="objAdresse" placeholder="Adresse">
                         <input type="text" id="objOrt" name="objOrt" placeholder="Ort" style="width: 60%;"><input type="text" id="objPLZ" name="objPLZ" placeholder="PLZ" style="width: 39%; margin-left: 7px;">
-                    </td>
-                </tr>
-                <tr>
-                    <td>
+                    </div>
+
+                    <div class="form-group">
                         <label for="rechAdresse">Rechnungsadresse:</label>
-                    </td>
-                    <td>
                         <select id="rechAnrede">
                             <option value="">Anrede</option>
                             <option value="rechM">Herr</option>  
@@ -95,40 +72,129 @@ if (!isset($_SESSION["name"])) {
                         <input type="text" id="rechNachname" name="rechNachname" placeholder="Nachname">
                         <input type="text" id="rechAdresse" name="rechAdresse" placeholder="Adresse">
                         <input type="text" id="rechOrt" name="rechOrt" placeholder="Ort" style="width: 60%;"><input type="text" id="rechPLZ" name="rechPLZ" placeholder="PLZ" style="width: 39%; margin-left: 7px;">
-                        
-                    </td>
-                </tr>
-                <tr>
-                    <td>
+                    </div>
+                    <div class="form-group work-section">
                         <label for="arbeiten">Auszuführende Arbeiten:</label>
-                    </td>
-                    <td>
-                        <input type="checkbox" id="reparatur" name="reparatur">
-                        <label for="reparatur">Reparatur</label>
-                        <input type="checkbox" id="sanitaer" name="sanitaer">
-                        <label for="sanitaer">Sanitär</label><br>
-
-                        <input type="checkbox" id="heizung" name="heizung">
-                        <label for="heizung">Heizung</label>
-                        <input type="checkbox" id="garantie" name="garantie">
-                        <label for="garantie">Garantie</label>
-
+                        <div class="checkbox-grid">
+                            <div class="checkbox-group">
+                                <input type="checkbox" id="reparatur" name="reparatur">
+                                <label for="reparatur">Reparatur</label>
+                            </div>
+                            <div class="checkbox-group">
+                                <input type="checkbox" id="sanitaer" name="sanitaer">
+                                <label for="sanitaer">Sanitär</label>
+                            </div>
+                            <div class="checkbox-group">
+                                <input type="checkbox" id="heizung" name="heizung">
+                                <label for="heizung">Heizung</label>
+                            </div>
+                            <div class="checkbox-group">
+                                <input type="checkbox" id="garantie" name="garantie">
+                                <label for="garantie">Garantie</label>
+                            </div>
+                        </div>
                         <textarea id="bemerkungen" name="bemerkungen" placeholder="Bemerkungen" style="height:80px;margin-top: 15px;"></textarea>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
+                    </div>
+                    <div class="form-group">
                         <label for="terminwunsch">Terminwunsch:</label>
-                    </td>
-                    <td>
                         <textarea id="terminwunsch" name="terminwunsch" placeholder="Terminwunsch" style="height:80px;margin-top: 15px;"></textarea>
-                    </td>
-                </tr>
-            </table>
+                    </div>
+                    <div class="submit-btns">
+                        <!-- Modified button to submit the form -->
+                        <button type="submit" id="submit" name="submit">Auftrag erfassen</button>
+                        <!-- btn to "print" the form with function printDocument() -->
+                        <button type="button" id="print" name="print" onclick="printDocument()">Drucken</button>
+                    </div>
+                </form>
+            </div><!-- end auftragErfassen -->
+            <script src="script.js"></script>
         </div>
-
-
-        <script src="script.js"></script>
-    </div>
-</body>
+    </body>
 </html>
+<?php // insertOrder.
+include 'db/conn.php';
+print("Test insertOrder.php");
+// Assuming the form is submitted via POST
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    try {
+        // Prepare the SQL statement with placeholders
+        $stmt = $pdo->prepare("INSERT INTO Orders (
+            kundenID, kundenName, objAdresse, objOrt, objPLZ, rechID, orderDate, orderTime,
+            reparatur, sanitaer, heizung, garantie, bemerkung, terminwunsch, zustand, arbeiterID,
+            completed, completedDate
+        ) VALUES (
+            :kundenID, :kundenName, :objAdresse, :objOrt, :objPLZ, :rechID, :orderDate, :orderTime,
+            :reparatur, :sanitaer, :heizung, :garantie, :bemerkung, :terminwunsch, :zustand, :arbeiterID,
+            :completed, :completedDate
+        )");
+// Since you construct kundenName from other parts, you should check each part separately
+        $kAnrede = $_POST['kAnrede'] ?? '';
+        $kVorname = $_POST['kVorname'] ?? '';
+        $kNachname = $_POST['kNachname'] ?? '';
+        
+        // Only construct the full name if all parts are present
+        if (!empty($kAnrede) && !empty($kVorname) && !empty($kNachname)) {
+            $kundenName = $kAnrede . ' ' . $kVorname . ' ' . $kNachname;
+        } else {
+            // Handle the error, show a message or redirect
+            echo "Error: Invalid name parts in: $kAnrede, $kVorname, $kNachname";
+            exit;
+        }
+
+        
+        $kundenID = $_POST['kundenID'] ?? ''; 
+        $kundenName = $_POST['kundenName'] ?? ''; 
+        var_dump($_SESSION);
+        // Bind the form data to the placeholders
+        $stmt->bindParam(':kundenID', $kundenID);
+        $stmt->bindParam(':kundenName', $kundenName);
+        $stmt->bindParam(':objAdresse', $objAdresse);
+        $stmt->bindParam(':objOrt', $objOrt);
+        $stmt->bindParam(':objPLZ', $objPLZ);
+        $stmt->bindParam(':rechID', $rechID);
+        $stmt->bindParam(':orderDate', $orderDate);
+        $stmt->bindParam(':orderTime', $orderTime);
+        $stmt->bindParam(':reparatur', $reparatur);
+        $stmt->bindParam(':sanitaer', $sanitaer);
+        $stmt->bindParam(':heizung', $heizung);
+        $stmt->bindParam(':garantie', $garantie);
+        $stmt->bindParam(':bemerkung', $bemerkung);
+        $stmt->bindParam(':terminwunsch', $terminwunsch);
+        $stmt->bindParam(':zustand', $zustand);
+        $stmt->bindParam(':arbeiterID', $arbeiterID);
+        $stmt->bindParam(':completed', $completed);
+        $stmt->bindParam(':completedDate', $completedDate);
+
+        // Assign form data to variables
+        $kundenID = $_POST['kundenID']; // Assuming you have this ID available
+        $kundenName = $_POST['kundenName']; // Construct the full name from inputs -> line 170
+        $objAdresse = $_POST['objAdresse'];
+        $objOrt = $_POST['objOrt'];
+        $objPLZ = $_POST['objPLZ'];
+        $rechID = $_POST['rechID']; // Assuming you have this ID available
+        $orderDate = $_POST['auftragsDatum'];
+        $orderTime = $_POST['zeit'];
+        $reparatur = isset($_POST['reparatur']) ? 1 : 0;
+        $sanitaer = isset($_POST['sanitaer']) ? 1 : 0;
+        $heizung = isset($_POST['heizung']) ? 1 : 0;
+        $garantie = isset($_POST['garantie']) ? 1 : 0;
+        $bemerkung = $_POST['bemerkungen'];
+        $terminwunsch = $_POST['terminwunsch'];
+        $zustand = 'TODO'; // Default state, change as needed
+        $arbeiterID = $_POST['arbeiterID']; // Assuming you have this ID available
+        $completed = 0; // Default completion status, change as needed
+        $completedDate = ''; // Default completion date, change as needed
+
+        // Execute the prepared statement
+        $stmt->execute();
+
+        // Redirect or show a success message
+        header('Location: success.php'); // Replace with your own success page or logic
+        exit;
+    } catch (PDOException $e) {
+        // Handle exception, display error message
+        echo "Error: " . $e->getMessage();
+    }
+}
+
+?>

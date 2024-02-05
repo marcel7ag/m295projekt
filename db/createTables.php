@@ -43,7 +43,7 @@ function createTables($pdo) {
         // Create Orders table
         $pdo->exec("CREATE TABLE IF NOT EXISTS Orders (
             orderID INTEGER PRIMARY KEY AUTOINCREMENT,
-            kundenID INTEGER NOT NULL,
+            kundenID INTEGER NOT NULL, /* Problem: need to manually type ID because AUTOINCREMENT cant be used rn. */
             kundenName TEXT NOT NULL,
             objAdresse TEXT NOT NULL,
             objOrt TEXT NOT NULL,
@@ -71,29 +71,41 @@ function createTables($pdo) {
 }
 
 function insertSample($pdo) {
-    // Insert data into Users table
-    $pdo->exec("INSERT INTO Users (username, password, role) VALUES 
-    ('admin', '1234', 'ADMIN'),
-    ('manager', '1234', 'MANAGER'),
-    ('arbeiter', '1234', 'ARBEITER')");
+    try {
+        // insert passwords hashed
+        $users = [
+            ['admin', 'Bene1234!_', 'ADMIN'],
+            ['manager', 'Bene1234!_', 'MANAGER'],
+            ['arbeiter', 'Bene1234!_', 'ARBEITER']
+        ];
+        // Iterate through each user and hash their password
+        foreach ($users as $user) {
+            $hashedPassword = password_hash($user[1], PASSWORD_DEFAULT);
 
-    // Insert data into Kunden table
-    $pdo->exec("INSERT INTO Kunden (kName, kVorname, kAdresse, kOrt, kPLZ, kTelefon, kGender) VALUES 
-    ('Mustermann', 'Max', 'Am Hauptplatz', 'Berlin', 8931, '0768881212', 'MALE'),
-    ('Schmidt', 'Anna', 'Im Park', 'München', 123456, '0791235541', 'FEMALE'),
-    ('Fischer', 'Lisa', 'An der Kirche', 'Hamburg', 8048, '0767773214', 'FEMALE')");
+            // Prepare the INSERT statement
+            $stmt = $pdo->prepare("INSERT INTO Users (username, password, role) VALUES (?, ?, ?)");
+            $stmt->execute([$user[0], $hashedPassword, $user[2]]);
+        }
+        // Insert data into Kunden table
+        $pdo->exec("INSERT INTO Kunden (kName, kVorname, kAdresse, kOrt, kPLZ, kTelefon, kGender) VALUES 
+        ('Mustermann', 'Max', 'Am Hauptplatz', 'Berlin', 8931, '0768881212', 'MALE'),
+        ('Schmidt', 'Anna', 'Im Park', 'München', 123456, '0791235541', 'FEMALE'),
+        ('Fischer', 'Lisa', 'An der Kirche', 'Hamburg', 8048, '0767773214', 'FEMALE')");
 
-    // Insert data into Rechnung table
-    $pdo->exec("INSERT INTO Rechnung (rAnrede, rName, rVorname, rAdresse, rOrt, rPLZ) VALUES 
-    ('Herr', 'Mustermann', 'Max', 'Am Hauptplatz', 'Berlin', 8931),
-    ('Frau', 'Schmidt', 'Anna', 'Im Park', 'München', 123456),
-    ('Frau', 'Fischer', 'Lisa', 'An der Kirche', 'Hamburg', 8048)");
+        // Insert data into Rechnung table
+        $pdo->exec("INSERT INTO Rechnung (rAnrede, rName, rVorname, rAdresse, rOrt, rPLZ) VALUES 
+        ('Herr', 'Mustermann', 'Max', 'Am Hauptplatz', 'Berlin', 8931),
+        ('Frau', 'Schmidt', 'Anna', 'Im Park', 'München', 123456),
+        ('Frau', 'Fischer', 'Lisa', 'An der Kirche', 'Hamburg', 8048)");
 
-    // Insert data into Orders table
-    $pdo->exec("INSERT INTO Orders (kundenID, kundenName, objAdresse, objOrt, objPLZ, rechID, orderDate, orderTime, reparatur, sanitaer, heizung, garantie, bemerkung, terminwunsch, zustand, arbeiterID, completed, completedDate) VALUES 
-    (1, 'Mustermann Max', 'Am Dom', 'Bern', 12324, 1, datetime('now'), datetime('now'), 0, 1, 0, 0, '', '', 'INPROGRESS', 1, 0, datetime('now')),
-    (2, 'Schmidt Anna', 'Pennymarkt', 'Tokyo', 32413, 2, datetime('now'), datetime('now'), 1, 0, 1, 0, '', '', 'TODO', 2, 0, datetime('now')),
-    (3, 'Fischer Lisa', 'Kebabladen', 'Köln', 32142, 3, datetime('now'), datetime('now'), 0, 1, 0, 1, '', '', 'TODO', 3, 0, datetime('now'))");
+        // Insert sample data into Orders table
+        $pdo->exec("INSERT INTO Orders (kundenID, kundenName, objAdresse, objOrt, objPLZ, rechID, orderDate, orderTime, reparatur, sanitaer, heizung, garantie, bemerkung, terminwunsch, zustand, arbeiterID, completed, completedDate) VALUES 
+        (1, 'Mustermann Max', 'Am Dom', 'Bern', 12324, 1, datetime('now'), datetime('now'), 0, 1, 0, 0, '', '', 'INPROGRESS', 1, 0, datetime('now')),
+        (2, 'Schmidt Anna', 'Pennymarkt', 'Tokyo', 32413, 2, datetime('now'), datetime('now'), 1, 0, 1, 0, '', '', 'TODO', 2, 0, datetime('now')),
+        (3, 'Fischer Lisa', 'Kebabladen', 'Köln', 32142, 3, datetime('now'), datetime('now'), 0, 1, 0, 1, '', '', 'TODO', 3, 0, datetime('now'))");
+    } catch (PDOException $e) {
+        die($e->getMessage());
+    }
 }
 
 function checkTables($pdo) {

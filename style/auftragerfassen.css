@@ -1,54 +1,70 @@
-/* style2.css */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #1e1e1e; /* Dark background color */
+    color: #fff; /* Light text color */
+    margin: 0;
+    padding: 0;
+}
 
-#auftragErfassen {
+.container {
+    max-width: 800px;
+    margin: 20px auto;
+    background-color: #333; /* Dark container background color */
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+h1, h2 {
+    color: #f5f5f5; /* Light heading text color */
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+    color: #ddd; /* Light label text color */
+}
+
+input[type="text"],
+input[type="tel"],
+select,
+textarea {
     width: 100%;
-    max-width: 600px;
-    margin: auto;
-}
-
-#auftragErfassen h2 {
-    text-align: center;
-    padding: 20px 0;
-}
-
-#auftragErfassen table {
-    width: 100%;
-    border-collapse: collapse;
-    border: 1px solid #ddd;
-}
-
-#auftragErfassen table th {
-    background-color: #4caf50;
-    color: white;
-}
-
-#auftragErfassen table, th, td {
     padding: 8px;
-    text-align: left;
-    border-bottom: 1px solid #ddd;
+    margin-bottom: 10px;
+    border: 1px solid #555; /* Medium dark border color */
+    border-radius: 4px;
+    box-sizing: border-box;
+    background-color: #333; /* Dark input background color */
+    color: #ddd; /* Light input text color */
 }
 
-#auftragErfassen table tr:hover {background-color:#f5f5f5;}
+input[type="checkbox"] {
+    margin-right: 5px;
+}
 
-#auftragErfassen input[type="date"],
-#auftragErfassen input[type="text"],
-#auftragErfassen input[type="tel"],
-#auftragErfassen select,
-#auftragErfassen textarea {
-    width: 100%;
-    padding: 12px 20px;
-    margin: 8px 0;
-    box-sizing: border-box;
-    border: 1px solid #ccc;
-    border-radius: 4px;
+textarea {
     resize: vertical;
 }
 
-#auftragErfassen .checkbox-group label {
-    display: inline-block;
-    margin-right: 10px;
+.checkbox-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
 }
 
-#auftragErfassen textarea {
-    resize: none;
+.checkbox-group {
+    display: flex;
+    align-items: center;
+    background-color: #555; /* Medium dark checkbox group background color */
+    padding: 10px; /* Add padding for better visibility */
+    border-radius: 4px;
+}
+.submit-btns {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
 }

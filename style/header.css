@@ -7,12 +7,14 @@
 
 /* Style the navigation bar */
 nav {
-    background-color: teal;
-    color: #fff;
+    background-color: #333; /* Dark container background color */
+    color: #fff; /* Light text color */
     padding: 20px;
     display: flex;
     justify-content: space-around;
     align-items: center;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2); /* Add subtle shadow for better visibility */
+    margin-bottom: 100px;
 }
 
 /* Style the list items */
@@ -34,6 +36,6 @@ nav ul li a {
 
 /* Change link color on hover */
 nav ul li a:hover {
-    background-color: #4c9e9e;
+    background-color: #555; /* Medium dark hover background color */
     border-radius: 5px;
 }

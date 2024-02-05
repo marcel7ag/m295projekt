@@ -3,7 +3,6 @@ function printDocument(){
 }
 
 // Auftraege.php
-
 // Get all detail buttons
 var btns = document.getElementsByClassName("detail-btn");
 
