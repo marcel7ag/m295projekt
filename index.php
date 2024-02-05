@@ -32,7 +32,7 @@ function authenticateUser() {
     $stmt->execute();
     $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
-    if ($row && strcmp($password, $row['password']) == 0) {
+    if ($row && password_verify($password, $row['password'])) {
         $_SESSION["id"] = $row['id'];
         $_SESSION["name"] = $username;
         $_SESSION["role"] = $row['role'];
@@ -42,6 +42,7 @@ function authenticateUser() {
         $_SESSION['attempt']++;
         $message = "Name oder Passwort ungültig.";
     }
+    
     $stmt = null;
 }
 
