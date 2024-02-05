@@ -1,2 +1,2 @@
 Need: PHP Interpreter.
-Always delete .db file when pulling.
+Always delete local .db file when pulling.
