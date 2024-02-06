@@ -118,6 +118,56 @@ print("Test insertOrder.php");
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     try {
         // Prepare the SQL statement with placeholders
+        $stmt = $pdo->prepare("SELECT id FROM Kunden WHERE kVorname COLLATE NOCASE = :kVorname AND kName COLLATE NOCASE = :kName AND kAdresse COLLATE NOCASE = :kAdresse");
+
+        // Bind parameters to the placeholders
+        $stmt->bindParam(':kVorname', $kVorname);
+        $stmt->bindParam(':kName', $kNachname);
+        $stmt->bindParam(':kAdresse', $kAdresse);
+
+        // Execute the statement
+        $stmt->execute();
+
+        // Abfrageresultat in $row speichern
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if ($row) {
+            // Der Kunde existiert in der Datenbank, also speichern wir die ID in einer Variable
+            $kID = $row['id'];
+        }
+        else {
+            // Der Kunde existiert nicht in der Datenbank, also erstellen wir auch den Kunden in der Datenbanktabelle "Kunden"
+            // TO DO:
+            //---
+            try {
+                echo "Kunde wird erstellt:";
+                $stmt = $pdo->prepare("INSERT INTO Kunden (kName, kVorname, kAdresse, kOrt, kPLZ, kTelefon, kGender) VALUES (:kName, :kVorname, :kAdresse, :kOrt, :kPLZ, :kTelefon, :kGender)");
+                
+                // Bind parameters to the placeholders
+                $stmt->bindParam(':kName', $kNachname);
+                $stmt->bindParam(':kVorname', $kVorname);
+                $stmt->bindParam(':kAdresse', $kAdresse);
+                $stmt->bindParam(':kOrt', $kOrt);
+                $stmt->bindParam(':kPLZ', $kPLZ);
+                $stmt->bindParam(':kTelefon', $kTelefon);
+                $stmt->bindParam(':kGender', $kGender);
+
+                $kVorname = $_POST['kVorname'] ?? null;
+                $kNachname = $_POST['kNachname'] ?? null;
+                $kAdresse = $_POST['kAdresse'] ?? null;
+                $kOrt = $_POST['kOrt'] ?? null;
+                $kPLZ = $_POST['kPLZ'] ?? null;
+                $kTelefon = $_POST['kTelefon'] ?? null;
+                $kGender = $_POST['kAnrede'] ?? null;
+
+                // Execute the statement
+                $stmt->execute();
+                echo "Kunde wurde erstellt";
+            } catch (\PDOException $e) { echo "An error occurred:" . $e->getMessage(); }
+        }
+
+
+        // Prepare the SQL statement with placeholders
         $stmt = $pdo->prepare("INSERT INTO Orders (
             kundenID, kundenName, objAdresse, objOrt, objPLZ, rechID, orderDate, orderTime,
             reparatur, sanitaer, heizung, garantie, bemerkung, terminwunsch, zustand, arbeiterID,
@@ -127,7 +177,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             :reparatur, :sanitaer, :heizung, :garantie, :bemerkung, :terminwunsch, :zustand, :arbeiterID,
             :completed, :completedDate
         )");
-// Since you construct kundenName from other parts, you should check each part separately
+        // Since you construct kundenName from other parts, you should check each part separately
         $kAnrede = $_POST['kAnrede'] ?? '';
         $kVorname = $_POST['kVorname'] ?? '';
         $kNachname = $_POST['kNachname'] ?? '';
@@ -141,8 +191,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             exit;
         }
 
-        
-        $kundenID = $_POST['kundenID'] ?? ''; 
         $kundenName = $_POST['kundenName'] ?? ''; 
         var_dump($_SESSION);
         // Bind the form data to the placeholders
@@ -167,11 +215,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         // Assign form data to variables
         $kundenID = $_POST['kundenID']; // Assuming you have this ID available
-        $kundenName = $_POST['kundenName']; // Construct the full name from inputs -> line 170
+        $kundenName = $_POST['kName']; // Construct the full name from inputs -> line 170
         $objAdresse = $_POST['objAdresse'];
         $objOrt = $_POST['objOrt'];
         $objPLZ = $_POST['objPLZ'];
-        $rechID = $_POST['rechID']; // Assuming you have this ID available
         $orderDate = $_POST['auftragsDatum'];
         $orderTime = $_POST['zeit'];
         $reparatur = isset($_POST['reparatur']) ? 1 : 0;
