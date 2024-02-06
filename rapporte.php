@@ -1,6 +1,7 @@
 <?php
 // oAuftraege.php
 session_start();
+include 'header.php';
 include 'db/conn.php';
 //var_dump($_SESSION);
 // Check if user is logged in

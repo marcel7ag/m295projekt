@@ -10,6 +10,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if ($action == 'Login') {
         manageLoginAttempts();
         authenticateUser();
+    } elseif ($action == 'Registrieren') {
+        validateAndRegisterUser();
     }
 }
 #TODO: fix 3 times attempt!!!
@@ -43,6 +45,41 @@ function authenticateUser() {
     
     $stmt = null;
 }
+
+function validateAndRegisterUser() {
+    global $password, $username, $message;
+
+    // check if username is already taken
+    $stmt = $GLOBALS['pdo']->prepare("SELECT id FROM users WHERE username = ?");
+    $stmt->bindValue(1, $username);
+    $stmt->execute();
+    if ($stmt->rowCount() > 0) {
+        $message = "Name bereits vergeben.";
+        return;
+    }
+    // create password rules: 10char, 1 upper, 1 lower, 1 number, 1 special char
+    if (!preg_match('/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+}{":;\'?\/>.<,])(?=.{10,})/', $password)) {
+        $message = "Passwort entspricht nicht den Anforderungen.";
+        return;
+    }
+    
+
+    try {
+        $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+        $stmt = $GLOBALS['pdo']->prepare("INSERT INTO users (username, password) VALUES (:username, :password)");
+        $stmt->bindValue(':username', $username);
+        $stmt->bindValue(':password', $hashedPassword);
+        $stmt->execute();            
+
+        if ($stmt->rowCount() > 0) {
+            $message = "Konto erfolgreich erstellt.";
+        } else {
+            throw new Exception("Fehler beim Erstellen des Kontos.");
+        }
+    } catch (Exception $e) {
+        $message = $e->getMessage();
+    }
+}
 ?>
 
 <!DOCTYPE html>
@@ -55,6 +92,11 @@ function authenticateUser() {
         <title>Login und Registration</title>
     </head>
     <body>
+
+            <!-- USER INTERFACE HERE FROM template.php-->
+            <?php
+            include 'header.php'; // only header tag with navigation & logout button
+            ?>
         <form method="post">
             <h1>Registrieren oder Login</h1>
             <div class="name-field">
@@ -69,6 +111,7 @@ function authenticateUser() {
             </div>
             <br><br>
             <input type="submit" name="action" value="Login">
+            <input type="submit" name="action" value="Registrieren">
             
         </form>
         <div id="msgDisplay"></div>

@@ -1,6 +1,7 @@
 <?php // user.php
     session_start();
     include 'db/conn.php';
+    include 'header.php';
     // debug
     // var_dump($_SESSION);
     // check if user is logged in

@@ -1,5 +1,6 @@
 <?php // erfassung.php
 session_start();
+include 'header.php';
 // Überprüfen, ob Benutzer angemeldet ist
 if (!isset($_SESSION["name"])) {
     header("Location: index.php");
