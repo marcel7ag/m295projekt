@@ -20,7 +20,7 @@ if (!isset($_SESSION["name"])) {
     <title>Alle Aufträge</title>
 </head>
 <body>
-    <table border="0" cellspacing="2" cellpadding="2"> 
+    <table class="oTable" border="0" cellspacing="2" cellpadding="2"> 
         <tr class="tableT"> 
             <td>ID</td>
             <td>KundenID</td>  
@@ -43,14 +43,27 @@ if (!isset($_SESSION["name"])) {
             $orderID = $row["orderID"];
             $kundenID = $row["kundenID"];
             $kundenName = $row["kundenName"];
-            $reparatur = $row["reparatur"];
-            $sanitaer = $row["sanitaer"];
-            $heizung = $row["heizung"];
-            $garantie = $row["garantie"];
+            $reparatur = "-";
+            $sanitaer = "-";
+            $heizung = "-";
+            $garantie = "-";
             $zustand;
             $color;
 
-            if($row["zustand"] == "INPROGRESS"){$color = "blue"; $zustand = "in Bearbeitung";}
+            if ($row["reparatur"] == '1') {
+                $reparatur = "ja";
+            }
+            if ($row["sanitaer"] == '1') {
+                $sanitaer = "ja";
+            }
+            if ($row["heizung"] == '1') {
+                $heizung = "ja";
+            }
+            if ($row["garantie"] == '1') {
+                $garantie = "ja";
+            }
+
+            if($row["zustand"] == "INPROGRESS"){$color = "lightblue"; $zustand = "in Bearbeitung";}
                 else if($row["zustand"] == "TODO"){$color = "orange"; $zustand = "Zu Bearbeiten";}
                 else if($row["zustand"] == "COMPLETED"){$color = "green"; $zustand = "Abgeschlossen";}
 

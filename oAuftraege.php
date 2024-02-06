@@ -3,7 +3,7 @@
 session_start();
 include 'header.php';
 include 'db/conn.php';
-var_dump($_SESSION);
+//var_dump($_SESSION);
 // Check if user is logged in
 if (!isset($_SESSION["name"])) {
     header("Location: index.php");
@@ -11,24 +11,6 @@ if (!isset($_SESSION["name"])) {
 }
 
 $id = $_SESSION['id'];
-$query = "SELECT * FROM orders WHERE arbeiterID = $id";
-$stmt = $pdo->prepare($query);
-$stmt->execute();
-$orders = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-function getColor($status) {
-    switch ($status) {
-        case 'INPROGRESS':
-            return 'blue';
-        case 'TODO':
-            return 'orange';
-        case 'COMPLETED':
-            return 'green';
-        default:
-            return 'red'; // oder eine andere Standardfarbe
-    }
-}
-
 ?>
 
 <!DOCTYPE html>
@@ -40,9 +22,9 @@ function getColor($status) {
         <title>AlleAufträge</title>
     </head>
     <body>
-        <table id="tablee" border="0" cellspacing="2" cellpadding="2"> 
+        <table class="oTable" border="0" cellspacing="2" cellpadding="2"> 
             <tr class="tableT"> 
-                <td style="width: min-content;">OrderID</td>
+                <td style="width: min-content;">ID</td>
                 <td style="width: min-content;" >KundenID</td>  
                 <td style="width: min-content;">KundenName</td> 
                 <td>Reparatur</td> 
@@ -52,27 +34,53 @@ function getColor($status) {
                 <td>Zustand</td>
                 <td>Auftragdetails</td>
             </tr>
-            <?php foreach ($orders as $order): ?>
-                <?php $color = getColor($order["zustand"]); ?>
-                <tr> 
-                    <td><?= $order["orderID"] ?></td> 
-                    <td><?= $order["kundenID"] ?></td> 
-                    <td><?= $order["kundenName"] ?></td> 
-                    <td><?= $order["reparatur"] ? "ja" : "nein" ?></td>
-                    <td><?= $order["sanitaer"] ? "ja" : "nein" ?></td>
-                    <td><?= $order["heizung"] ? "ja" : "nein" ?></td>
-                    <td><?= $order["garantie"] ? "ja" : "nein" ?></td>
-                    <td style="color: <?= $color ?>;"><?= ucfirst($order["zustand"]) ?></td>
-                    <td><button class="detail-btn" data-id="<?= $order["orderID"] ?>">Details</button></td> 
-                </tr>
-                <div id="modal-<?= $order["orderID"] ?>" class="modal hidden">
-                    <div class="modal-content">
-                        <!-- Close Button -->
-                        <span id="closeSpan" onclick="this.parentElement.parentElement.style.display='none'; document.querySelector('.overlay').style.display='none';" class="close">&times;</span>
-                        <!-- Your modal content goes here -->
-                    </div>
-                </div>
-            <?php endforeach; ?>
+            <?php
+
+            $query = "SELECT * FROM orders WHERE arbeiterID = $id";
+            $stmt = $pdo->prepare($query);
+            $stmt->execute();
+            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                $orderID = $row["orderID"];
+                $kundenID = $row["kundenID"];
+                $kundenName = $row["kundenName"];
+                $reparatur = "-";
+                $sanitaer = "-";
+                $heizung = "-";
+                $garantie = "-";
+                $zustand;
+                $color;
+
+                if ($row["reparatur"] == '1') {
+                    $reparatur = "ja";
+                }
+                if ($row["sanitaer"] == '1') {
+                    $sanitaer = "ja";
+                }
+                if ($row["heizung"] == '1') {
+                    $heizung = "ja";
+                }
+                if ($row["garantie"] == '1') {
+                    $garantie = "ja";
+                }
+
+                if($row["zustand"] == "INPROGRESS"){$color = "lightblue"; $zustand = "in Bearbeitung";}
+                    else if($row["zustand"] == "TODO"){$color = "orange"; $zustand = "Zu Bearbeiten";}
+                    else if($row["zustand"] == "COMPLETED"){$color = "green"; $zustand = "Abgeschlossen";}
+
+                echo '<tr> 
+                <td>'.$orderID.'</td> 
+                <td>'.$kundenID.'</td> 
+                <td>'.$kundenName.'</td> 
+                <td>'.$reparatur.'</td>
+                <td>'.$sanitaer.'</td>
+                <td>'.$heizung.'</td>
+                <td>'.$garantie.'</td>
+                <td style="color: '.$color.';">'.$zustand.'</td>
+                <td><button class="detail-btn" data-id="'.$orderID.'">Details</button></td> 
+                </tr>';
+            }
+            echo '</table>';
+        ?>
         </table>
         <script src="script.js" defer></script>
     </body>

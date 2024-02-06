@@ -34,7 +34,7 @@ input[type="password"] {
 }
 
 /* Submit button styles */
-input[type="submit"] {
+input[type="submit"], button {
     width: 100%;
     padding: 10px;
     margin: 10px 0;
@@ -45,7 +45,7 @@ input[type="submit"] {
     cursor: pointer;
 }
 
-input[type="submit"]:hover{
+input[type="submit"]:hover, button:hover{
     background-color: #0056b3;
     transition: all 0.3s;
 }
@@ -97,4 +97,23 @@ input[type="submit"]:hover{
     color: #ddd; /* Light text color */
     font-size: 14px;
     height: 60px;
+}
+
+.oTable {
+    width: fit-content;
+    display: table;
+    text-align: center;
+    justify-content: space-around;
+    background-color: #333;
+    border-radius: 5px;
+    margin-left: 30%;
+    margin-right: 30%;
+    padding: 6px;
+}
+.oTable tr:first-child{
+    font-weight: bold;
+}
+.detail-btn {
+    align-items: center;
+    width: 80px;
 }
