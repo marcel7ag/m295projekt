@@ -3,7 +3,7 @@
     include 'db/conn.php';
     include 'header.php';
     // debug
-    var_dump($_SESSION);
+    // var_dump($_SESSION);
     // check if user is logged in
     if (!isset($_SESSION["name"])) {
         header("Location: index.php");
@@ -44,12 +44,12 @@
                         }
                         else if ($_SESSION["role"] == 'MANAGER') {
                             echo   '<div class="tool-option">
-                                        <span>Order Planning:</span>
+                                        <span>Aufträge zuteilen:</span>
                                         <input type="submit" id="auftraege" name="action" value="Orders">
                                     </div>
                                     <div class="tool-option">
-                                        <span>Edit Your Open Orders:</span>
-                                        <input type="submit" id="oAuftraege" name="action" value="Open Orders">
+                                        <span>Rapporte ansehen:</span>
+                                        <input type="submit" id="oAuftraege" name="action" value="Rapporte">
                                     </div>';
                         }
                         else if ($_SESSION["role"] == 'WORKER') {
@@ -78,9 +78,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     } // bt Orders
     else if ($action == 'Orders') {
         echo "Orders";
-        header("Location: auftraege.php");
+        header("Location: auftragZuteilung.php");
         exit();
-    } // bt Open Orders
+    } // bt Rapporte
+    else if ($action == 'Rapporte') {
+        echo "Orders";
+        header("Location: rapporte.php");
+        exit();
+    }  // bt Orders
     else if ($action == 'Open Orders') {
         echo "Open Orders";
         header("Location: oAuftraege.php");
