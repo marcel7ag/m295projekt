@@ -41,7 +41,6 @@ if (!isset($_SESSION["name"])) {
                                 <option value="m">Herr</option>  
                                 <option value="f">Frau</option>  
                             </select>
-                            <input type="text" id="kundenID" name="kundenID" placeholder="Kunden ID">
                         </div>
                         <input type="text" id="kVorname" name="kVorname" placeholder="Vorname">
                         <input type="text" id="kNachname" name="kNachname" placeholder="Nachname">
@@ -157,11 +156,27 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $kOrt = $_POST['kOrt'] ?? null;
                 $kPLZ = $_POST['kPLZ'] ?? null;
                 $kTelefon = $_POST['kTelefon'] ?? null;
-                $kGender = $_POST['kAnrede'] ?? null;
+                if ($_POST['kAnrede'] == "rechM"){ $kGender == "MALE";} else { $kGender == "FEMALE"; }
 
                 // Execute the statement
                 $stmt->execute();
                 echo "Kunde wurde erstellt";
+
+                $stmt = $pdo->prepare("SELECT id FROM Kunden WHERE kVorname COLLATE NOCASE = :kVorname AND kName COLLATE NOCASE = :kName AND kAdresse COLLATE NOCASE = :kAdresse");
+                // Bind parameters to the placeholders
+                $stmt->bindParam(':kVorname', $kVorname);
+                $stmt->bindParam(':kName', $kNachname);
+                $stmt->bindParam(':kAdresse', $kAdresse);
+
+                // Execute the statement
+                $stmt->execute();
+
+                // Abfrageresultat in $row speichern
+                $row = $stmt->fetch(PDO::FETCH_ASSOC);
+                if ($row) {
+                    // Der Kunde existiert in der Datenbank, also speichern wir die ID in einer Variable
+                    $kID = $row['id'];
+                }
             } catch (\PDOException $e) { echo "An error occurred:" . $e->getMessage(); }
         }
 
@@ -190,10 +205,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             exit;
         }
 
-        $kundenName = $_POST['kundenName'] ?? ''; 
-        var_dump($_SESSION);
+        // $kundenName = $_POST['kundenName'] ?? '';
+        echo $kGender;
+        // var_dump($_SESSION);
         // Bind the form data to the placeholders
-        $stmt->bindParam(':kundenID', $kundenID);
+        $stmt->bindParam(':kundenID', $kID);
         $stmt->bindParam(':kundenName', $kundenName);
         $stmt->bindParam(':objAdresse', $objAdresse);
         $stmt->bindParam(':objOrt', $objOrt);
@@ -208,18 +224,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $stmt->bindParam(':bemerkung', $bemerkung);
         $stmt->bindParam(':terminwunsch', $terminwunsch);
         $stmt->bindParam(':zustand', $zustand);
-        $stmt->bindParam(':arbeiterID', $arbeiterID);
+        // $stmt->bindParam(':arbeiterID', $arbeiterID);
         $stmt->bindParam(':completed', $completed);
         $stmt->bindParam(':completedDate', $completedDate);
 
         // Assign form data to variables
-        $kundenID = $_POST['kundenID']; // Assuming you have this ID available
-        $kundenName = $_POST['kName']; // Construct the full name from inputs -> line 170
+        $kundenName = $_POST['kNachname']; // Construct the full name from inputs -> line 170
         $objAdresse = $_POST['objAdresse'];
         $objOrt = $_POST['objOrt'];
         $objPLZ = $_POST['objPLZ'];
         $orderDate = $_POST['auftragsDatum'];
         $orderTime = $_POST['zeit'];
+        $rechID = random_int(1,10000);
         $reparatur = isset($_POST['reparatur']) ? 1 : 0;
         $sanitaer = isset($_POST['sanitaer']) ? 1 : 0;
         $heizung = isset($_POST['heizung']) ? 1 : 0;
@@ -227,15 +243,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $bemerkung = $_POST['bemerkungen'];
         $terminwunsch = $_POST['terminwunsch'];
         $zustand = 'TODO'; // Default state, change as needed
-        $arbeiterID = $_POST['arbeiterID']; // Assuming you have this ID available
+        // $arbeiterID = $_POST['arbeiterID'];
         $completed = 0; // Default completion status, change as needed
         $completedDate = ''; // Default completion date, change as needed
 
         // Execute the prepared statement
         $stmt->execute();
-
-        // Redirect or show a success message
-        header('Location: success.php'); // Replace with your own success page or logic
+        
         exit;
     } catch (PDOException $e) {
         // Handle exception, display error message
