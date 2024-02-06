@@ -8,9 +8,7 @@ if (!isset($_SESSION["name"])) {
     exit();
 }
 // debug
-var_dump($_SESSION);
-
-
+// var_dump($_SESSION);
 ?>
 
 <!DOCTYPE html>
@@ -34,17 +32,12 @@ var_dump($_SESSION);
             <td>Zustand</td>
             <td>Auftragdetails</td>
         </tr>
-    <!--------->
-    <!--TO DO: FIX MODAL SHIT BRO DAS HàSSLICH AS FUCK-->
-    <!--------->
     <?php
     require 'db/conn.php';
     
-    $query = "SELECT * FROM orders";
+    $query = "SELECT * FROM Orders";
     $stmt = $pdo->prepare($query);
     $stmt->execute();
-
-    if ($stmt->rowCount() > 0) {
 
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
             $orderID = $row["orderID"];
@@ -56,33 +49,25 @@ var_dump($_SESSION);
             $garantie = $row["garantie"];
             $zustand;
             $color;
-            
 
             if($row["zustand"] == "INPROGRESS"){$color = "blue"; $zustand = "in Bearbeitung";}
                 else if($row["zustand"] == "TODO"){$color = "orange"; $zustand = "Zu Bearbeiten";}
                 else if($row["zustand"] == "COMPLETED"){$color = "green"; $zustand = "Abgeschlossen";}
 
-                echo '<tr> 
-                <td>'.$orderID.'</td> 
-                <td>'.$kundenID.'</td> 
-                <td>'.$kundenName.'</td> 
-                <td>'.$reparatur.'</td>
-                <td>'.$sanitaer.'</td>
-                <td>'.$heizung.'</td>
-                <td>'.$garantie.'</td>
-                <td style="color: '.$color.';">'.$zustand.'</td>
-                <td><button class="detail-btn" data-id="'.$orderID.'">Details</button></td> 
-                </tr>
-                <div id="modal-'.$orderID.'" class="modal hidden">
-                    <div class="modal-content">
-                        <!-- Close Button -->
-                        <span id="closeSpan" onclick="this.parentElement.parentElement.style.display=\'none\'; document.querySelector(\'.overlay\').style.display=\'none\';" class="close">&times;</span>
-                        <!-- Your modal content goes here -->
-                    </div>
-                </div>';
+            echo '<tr> 
+            <td>'.$orderID.'</td> 
+            <td>'.$kundenID.'</td> 
+            <td>'.$kundenName.'</td> 
+            <td>'.$reparatur.'</td>
+            <td>'.$sanitaer.'</td>
+            <td>'.$heizung.'</td>
+            <td>'.$garantie.'</td>
+            <td style="color: '.$color.';">'.$zustand.'</td>
+            <td><button class="detail-btn" data-id="'.$orderID.'">Details</button></td> 
+            </tr>';
         }
     echo '</table>';
-    }
+    
 ?>
     
         <script src="script.js" defer></script>
