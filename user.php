@@ -44,6 +44,10 @@
                                     <div class="tool-option">
                                         <span>Edit Your Open Orders:</span>
                                         <input type="submit" id="oAuftraege" name="action" value="Open Orders">
+                                    </div>
+                                    <div class="tool-option">
+                                    <span>See all Orders:</span>
+                                    <input type="submit" id="oAuftraege" name="action" value="All Orders">
                                     </div>';
                         }
                         else if ($_SESSION["role"] == 'MANAGER') {
@@ -94,7 +98,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         echo "Open Orders";
         header("Location: oAuftraege.php");
         exit();
-    } // bt Logout
+    } // bt offene Orders
+    else if ($action == 'All Orders') {
+        echo "Open Orders";
+        header("Location: auftraege.php");
+        exit();
+    }// bt Logout
     else if ($action == 'Logout') {
         echo "Logout";
         session_unset();

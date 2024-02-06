@@ -18,10 +18,9 @@ if (!isset($_SESSION["name"])) {
     </head>
     <body>
         <div class="container">
-            <h1>Auftragsverwaltung</h1>
+            <h1>Auftragserfassung</h1>
             <!-- Rest des HTML-Codes... -->
             <div id="auftragErfassen">
-                <h2>Auftrag erfassen</h2>
                     <form method="post">
 
                     <div class="form-group">
@@ -103,7 +102,7 @@ if (!isset($_SESSION["name"])) {
                         <!-- Modified button to submit the form -->
                         <button type="submit" id="submit" name="submit">Auftrag erfassen</button>
                         <!-- btn to "print" the form with function printDocument() -->
-                        <button type="button" id="print" name="print" onclick="printDocument()">Drucken</button>
+                        <button type="button" id="print" name="print" onclick="printdiv('container')">Drucken</button>
                     </div>
                 </form>
             </div><!-- end auftragErfassen -->
