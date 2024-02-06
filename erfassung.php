@@ -156,7 +156,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $kOrt = $_POST['kOrt'] ?? null;
                 $kPLZ = $_POST['kPLZ'] ?? null;
                 $kTelefon = $_POST['kTelefon'] ?? null;
-                if ($_POST['kAnrede'] == "rechM"){ $kGender == "MALE";} else { $kGender == "FEMALE"; }
+                // set Gender for db
+                if ($_POST['kAnrede'] == "rechM") { 
+                    $kGender = "MALE";} 
+                else { 
+                    $kGender = "FEMALE"; }
 
                 // Execute the statement
                 $stmt->execute();
@@ -235,7 +239,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $objPLZ = $_POST['objPLZ'];
         $orderDate = $_POST['auftragsDatum'];
         $orderTime = $_POST['zeit'];
-        $rechID = random_int(1,10000);
+        $rechID = random_int(1,10000); // random rechnungsID
         $reparatur = isset($_POST['reparatur']) ? 1 : 0;
         $sanitaer = isset($_POST['sanitaer']) ? 1 : 0;
         $heizung = isset($_POST['heizung']) ? 1 : 0;
