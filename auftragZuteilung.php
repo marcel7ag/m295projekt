@@ -28,7 +28,7 @@ $id = $_SESSION['id'];
         $stmt->execute();
         ?>
             <?php
-            if ($stmt->rowCount() == 0){ echo '<p style="text-align: center; font-weight: bold;">Alle Aufträge sind zugteilt worden!</p>'; }
+            if ($stmt->rowCount() == 0){ echo '<p style="text-align: center; font-weight: bold;">Alle Aufträge sind zugeteilt worden!</p>'; }
             else {
                 echo '
                 <table class="oTable" border="0" cellspacing="2" cellpadding="2"> 

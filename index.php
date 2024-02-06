@@ -55,11 +55,6 @@ function authenticateUser() {
         <title>Login und Registration</title>
     </head>
     <body>
-
-            <!-- USER INTERFACE HERE FROM template.php-->
-            <?php
-            include 'header.php'; // only header tag with navigation & logout button
-            ?>
         <form method="post">
             <h1>Registrieren oder Login</h1>
             <div class="name-field">

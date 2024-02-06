@@ -1,7 +1,6 @@
 <?php
 // oAuftraege.php
 session_start();
-include 'header.php';
 include 'db/conn.php';
 //var_dump($_SESSION);
 // Check if user is logged in
@@ -22,6 +21,7 @@ $id = $_SESSION['id'];
         <title>AlleAufträge</title>
     </head>
     <body>
+        <h1 style="text-align: center; margin: 10px;">Ihre offenen Aufträge</h1>
         <table class="oTable" border="0" cellspacing="2" cellpadding="2"> 
             <tr class="tableT"> 
                 <td style="width: min-content;">ID</td>
@@ -76,7 +76,7 @@ $id = $_SESSION['id'];
                 <td>'.$heizung.'</td>
                 <td>'.$garantie.'</td>
                 <td style="color: '.$color.';">'.$zustand.'</td>
-                <td><button class="detail-btn" data-id="'.$orderID.'">Details</button></td> 
+                <td><button class="detail-btn" data-id="'.$orderID.'">Rapport</button></td> 
                 </tr>';
             }
             echo '</table>';

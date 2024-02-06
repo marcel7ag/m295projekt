@@ -1,7 +1,6 @@
 <?php // user.php
     session_start();
     include 'db/conn.php';
-    include 'header.php';
     // debug
     // var_dump($_SESSION);
     // check if user is logged in
@@ -38,6 +37,10 @@
                                         <input type="submit" id="auftraege" name="action" value="Orders">
                                     </div>
                                     <div class="tool-option">
+                                        <span>Aufträge verrechnen:</span>
+                                        <input type="submit" id="verrechnung" name="action" value="Verrechnung">
+                                    </div>
+                                    <div class="tool-option">
                                         <span>Edit Your Open Orders:</span>
                                         <input type="submit" id="oAuftraege" name="action" value="Open Orders">
                                     </div>';
@@ -52,7 +55,7 @@
                                         <input type="submit" id="oAuftraege" name="action" value="Rapporte">
                                     </div>';
                         }
-                        else if ($_SESSION["role"] == 'WORKER') {
+                        else if ($_SESSION["role"] == 'ARBEITER') {
                             echo   '<div class="tool-option">
                                         <span>Edit Your Open Orders:</span>
                                         <input type="submit" id="oAuftraege" name="action" value="Open Orders">
@@ -82,7 +85,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         exit();
     } // bt Rapporte
     else if ($action == 'Rapporte') {
-        echo "Orders";
+        echo "Rapporte";
         header("Location: rapporte.php");
         exit();
     }  // bt Orders
@@ -96,6 +99,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         session_unset();
         session_destroy();
         header("Location: index.php");
+        exit();
+    } // bt Verrechnung
+    else if ($action == 'Logout') {
+        echo "Verrechnung";
+        session_unset();
+        session_destroy();
+        header("Location: verrechnung.php");
         exit();
     }
     
