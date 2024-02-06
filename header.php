@@ -2,6 +2,6 @@
 <header>
     <nav>
         <ul>
-            <li><a href="user.php">Dashboard - User</a></li>
+            <li><a href="user.php">Dashboard</a></li>
         </ul>
 </header>
