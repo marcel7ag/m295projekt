@@ -47,6 +47,10 @@
                             <div class="tool-option">
                                 <span>See all Orders:</span>
                                 <input type="submit" id="oAuftraege" name="action" value="All Orders">
+                            </div>
+                            <div class="tool-option">
+                                <span>Dispose Orders:</span>
+                                <input type="submit" id="oAuftraege" name="action" value="Dispose Orders">
                             </div>';
                     } else if ($_SESSION["role"] == 'MANAGER') {
                         // Manager tools
@@ -110,11 +114,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         header("Location: index.php");
         exit();
     } // bt Verrechnung
-    else if ($action == 'Logout') {
+    else if ($action == 'Verrechnung') {
         echo "Verrechnung";
         session_unset();
         session_destroy();
         header("Location: verrechnung.php");
+        exit();
+    } // bt Dispose
+    else if ($action == 'Dispose Orders') {
+        echo "Dispose Orders";
+        session_unset();
+        session_destroy();
+        header("Location: disposeOrders.php");
         exit();
     }
     
