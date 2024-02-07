@@ -97,10 +97,9 @@ if (!isset($_SESSION["name"])) {
         $zustand = "COMPLETED";
         $rapport = isset($_POST['report']) ? $_POST['report'] : '';
     
-        $query = "UPDATE Orders SET zustand = :zustandd, rapport = :rapportt , CompletedDate = :Compldate WHERE orderID = :orderId";
+        $query = "UPDATE Orders SET rapport = :rapportt , CompletedDate = :Compldate WHERE orderID = :orderId";
         $stmt = $pdo->prepare($query);
         $stmt->bindParam(':orderId', $orderID, PDO::PARAM_INT);
-        $stmt->bindParam(':zustandd', $zustand, PDO::PARAM_STR);
         $stmt->bindParam(':Compldate', $Compldate, PDO::PARAM_STR);
         $stmt->bindParam(':rapportt', $rapport, PDO::PARAM_STR);
         $stmt->execute();

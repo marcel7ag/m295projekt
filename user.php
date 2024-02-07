@@ -51,6 +51,10 @@
                             <div class="tool-option">
                                 <span>Aufträge löschen:</span>
                                 <input type="submit" id="oAuftraege" name="action" value="Delete Orders">
+                            </div>
+                            <div class="tool-option">
+                                <span>Rapporte prüfen:</span>
+                                <input type="submit" id="oAuftraege" name="action" value="Rapporte prüfen">
                             </div>';
                     } else if ($_SESSION["role"] == 'MANAGER') {
                         // Manager tools
@@ -60,7 +64,7 @@
                             </div>
                             <div class="tool-option">
                                 <span>Rapporte ansehen:</span>
-                                <input type="submit" id="oAuftraege" name="action" value="Rapporte">
+                                <input type="submit" id="oAuftraege" name="action" value="Rappore">
                             </div>';
                     } else if ($_SESSION["role"] == 'ARBEITER') {
                         // Arbeiter tools
@@ -122,6 +126,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     else if ($action == 'Delete Orders') {
         echo "Delete Orders";
         header("Location: deleteOrders.php");
+        exit();
+    } // bt Rapporte
+    else if ($action == 'Rapporte prüfen') {
+        echo "Rapporte prüfen";
+        header("Location: rapportCheck.php");
         exit();
     }
     
