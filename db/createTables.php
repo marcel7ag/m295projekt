@@ -61,6 +61,7 @@ function createTables($pdo) {
             completed BOOLEAN DEFAULT 0,
             completedDate TEXT NOT NULL,
             verrechnet BOOLEAN DEFAULT 0,
+            rapport TEXT,
             FOREIGN KEY (kundenID) REFERENCES Kunden(id),
             FOREIGN KEY (rechID) REFERENCES Rechnung(id),
             FOREIGN KEY (arbeiterID) REFERENCES Users(id)
