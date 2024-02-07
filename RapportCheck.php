@@ -78,11 +78,9 @@ if (!isset($_SESSION["name"])) {
             <div>' . $garantie . '</div>
             <div style="color: ' . $color . ';">' . $zustand . '</div>
             </div>';
-        // Assign unique IDs to each form and button
-        $uniqueFormId = 'form' . $orderID;
         $uniqueButtonIdV = 'btn-idV-' . $orderID;
         $uniqueButtonIdR = 'btn-idR-' . $orderID;
-        echo '<form class="formZuteilung" id="'.$uniqueFormId.'" style="width:auto; padding:0px;margin:0px;background-color:transparent;border:none;box-shadow:none;" method="post" action="">
+        echo '<form id="formZuteilung" style="width:auto; padding:0px;margin:0px;background-color:transparent;border:none;box-shadow:none;" method="post" action="">
                 <div style="margin:15px;">
                     <div>
                         <label style="display:block;" for="report">Rapport:</label>
@@ -94,22 +92,51 @@ if (!isset($_SESSION["name"])) {
                     </div>
                 </div><hr style="border: none;/* width: 50%; */height: 10px;border-top: solid white 2px;">
                 ';
+    }
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+        // Iterate over the $_POST array to find the clicked button
+        foreach ($_POST as $buttonName => $value) {
+            // Check if the button name starts with 'btn-idV-' or 'btn-idR-'
+            if (strpos($buttonName, 'btn-idV-') ===  0 || strpos($buttonName, 'btn-idR-') ===  0) {
+                // Now you have the button name, you can perform actions based on it
+                $buttonClicked = $buttonName;
+                if (strpos($buttonName, 'btn-idV-') ===  0) {
+                    $orderID = substr($buttonName, strlen('btn-idV-'));
+                    $orderID = substr($buttonName, strlen('btn-idR-'));
+                    $zustand = "COMPLETED";
+                    $status = "TRUE";
+                
+                    $query = "UPDATE Orders SET completed = :statuss, zustand = :zustand WHERE orderID = :orderId";
+                    $stmt = $pdo->prepare($query);
+                    $stmt->bindParam(':orderId', $orderID, PDO::PARAM_INT);
+                    $stmt->bindParam(':zustand', $zustand, PDO::PARAM_STR);
+                    $stmt->bindParam(':statuss', $status, PDO::PARAM_STR);
+                    $stmt->execute();
+                
+                    // Optionally send a response back to the client
+                    echo "Rapport wurde akzeptiert und ist zur Verrechnung bereit!";
 
-        if ($_SERVER["REQUEST_METHOD"] == "POST") {
-            foreach ($_POST as $key => $value) {
-                // Check if the key starts with 'btn-idV-' or 'btn-idR-', indicating a button was clicked
-                if (strpos($key, 'btn-idV-') ===  0 || strpos($key, 'btn-idR-') ===  0) {
-                    // Extract the orderID from the key
-                    $orderID = substr($key, strlen('btn-idV-')); // or 'btn-idR-' if needed
-                    
-                    // Determine the action based on the prefix
-                    $action = strpos($key, 'btn-idV-') ===  0 ? 'Verrechnung bereitstellen' : 'Rapport ablehnen';
-                    
-                    // Now you can use $orderID and $action to perform the desired operation
-                    break; // Break the loop as we found the clicked button
+                } elseif (strpos($buttonName, 'btn-idR-') ===  0) {
+                    $orderID = substr($buttonName, strlen('btn-idR-'));
+                    $zustand = "INPROGRESS";
+                    $rapport = null;
+                
+                    $query = "UPDATE Orders SET rapport = :rapport , zustand = :zustand WHERE orderID = :orderId";
+                    $stmt = $pdo->prepare($query);
+                    $stmt->bindParam(':orderId', $orderID, PDO::PARAM_INT);
+                    $stmt->bindParam(':zustand', $zustand, PDO::PARAM_STR);
+                    $stmt->bindParam(':rapport', $rapport, PDO::PARAM_STR);
+                    $stmt->execute();
+                
+                    // Optionally send a response back to the client
+                    echo "Rapport wurde abgelehnt!";
                 }
+                break; // Exit the loop once the clicked button is found
             }
         }
+    }
+    
+    
                     
     
     
