@@ -50,7 +50,6 @@ function createTables($pdo) {
             objPLZ INTEGER NOT NULL,
             rechID INTEGER NOT NULL,
             orderDate TEXT NOT NULL,
-            orderTime TEXT NOT NULL,
             reparatur BOOLEAN DEFAULT 0,
             sanitaer BOOLEAN DEFAULT 0,
             heizung BOOLEAN DEFAULT 0,
@@ -99,11 +98,13 @@ function insertSample($pdo) {
         ('Frau', 'Schmidt', 'Anna', 'Im Park', 'München', 123456),
         ('Frau', 'Fischer', 'Lisa', 'An der Kirche', 'Hamburg', 8048)");
 
+        // create orderDate  format: 'dd-mm-yyyy hh:mm:ss'
+        $date = date('d-m-Y H:i:s');
         // Insert sample data into Orders table
-        $pdo->exec("INSERT INTO Orders (kundenID, kundenName, objAdresse, objOrt, objPLZ, rechID, orderDate, orderTime, reparatur, sanitaer, heizung, garantie, bemerkung, terminwunsch, zustand, arbeiterID, completed, completedDate) VALUES 
-        (1, 'Mustermann Max', 'Am Dom', 'Bern', 12324, 1, datetime('now'), datetime('now'), 0, 1, 0, 0, '', '', 'INPROGRESS', 1, 0, datetime('now')),
-        (2, 'Schmidt Anna', 'Pennymarkt', 'Tokyo', 32413, 2, datetime('now'), datetime('now'), 1, 0, 1, 0, '', '', 'TODO', 2, 0, datetime('now')),
-        (3, 'Fischer Lisa', 'Kebabladen', 'Köln', 32142, 3, datetime('now'), datetime('now'), 0, 1, 0, 1, '', '', 'TODO', 3, 0, datetime('now'))");
+        $pdo->exec("INSERT INTO Orders (kundenID, kundenName, objAdresse, objOrt, objPLZ, rechID, orderDate, reparatur, sanitaer, heizung, garantie, bemerkung, terminwunsch, zustand, arbeiterID, completed, completedDate) VALUES 
+        (1, 'Mustermann Max', 'Am Dom', 'Bern', 12324, 1, '$date', 0, 1, 0, 0, '', '', 'INPROGRESS', 1, 0, '$date'),
+        (2, 'Schmidt Anna', 'Pennymarkt', 'Tokyo', 32413, 2, '$date', 1, 0, 1, 0, '', '', 'TODO', 2, 0, '$date'),
+        (3, 'Fischer Lisa', 'Kebabladen', 'Köln', 32142, 3, '$date', 0, 1, 0, 1, '', '', 'TODO', 3, 0, '$date')");
     } catch (PDOException $e) {
         die($e->getMessage());
     }
