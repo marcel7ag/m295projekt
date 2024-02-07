@@ -17,7 +17,7 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="style/style.css">
-        <title>Welcome</title>
+        <title>Willkommen</title>
     </head>
     <body>
         <form method="post">
@@ -29,11 +29,11 @@
                     if ($_SESSION["role"] == 'ADMIN') {
                         // Admin tools
                         echo '<div class="tool-option">
-                                <span>Order Entry:</span>
+                                <span>Auftragserfassung:</span>
                                 <input type="submit" id="auftragserfassung" name="action" value="Order Entry">
                             </div>
                             <div class="tool-option">
-                                <span>Dispose Orders:</span>
+                                <span>Aufträge zuteilen:</span>
                                 <input type="submit" id="auftraege" name="action" value="Dispose Order">
                             </div>
                             <div class="tool-option">
@@ -41,15 +41,15 @@
                                 <input type="submit" id="verrechnung" name="action" value="Verrechnung">
                             </div>
                             <div class="tool-option">
-                                <span>Edit Your Open Orders:</span>
+                                <span>Ihre offenen Aufträge:</span>
                                 <input type="submit" id="oAuftraege" name="action" value="Open Orders">
                             </div>
                             <div class="tool-option">
-                                <span>See all Orders:</span>
+                                <span>Alle Aufträge sehen:</span>
                                 <input type="submit" id="oAuftraege" name="action" value="All Orders">
                             </div>
                             <div class="tool-option">
-                                <span>Delete Orders:</span>
+                                <span>Aufträge löschen:</span>
                                 <input type="submit" id="oAuftraege" name="action" value="Delete Orders">
                             </div>';
                     } else if ($_SESSION["role"] == 'MANAGER') {
@@ -65,7 +65,7 @@
                     } else if ($_SESSION["role"] == 'ARBEITER') {
                         // Arbeiter tools
                         echo '<div class="tool-option">
-                                <span>Edit Your Open Orders:</span>
+                                <span>Ihre offenen Aufträge:</span>
                                 <input type="submit" id="oAuftraege" name="action" value="Open Orders">
                             </div>';
                     }
