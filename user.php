@@ -116,15 +116,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     } // bt Verrechnung
     else if ($action == 'Verrechnung') {
         echo "Verrechnung";
-        session_unset();
-        session_destroy();
         header("Location: verrechnung.php");
         exit();
     } // bt Delete
     else if ($action == 'Delete Orders') {
         echo "Delete Orders";
-        session_unset();
-        session_destroy();
         header("Location: deleteOrders.php");
         exit();
     }

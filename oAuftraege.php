@@ -39,63 +39,60 @@ $id = $_SESSION['id'];
         require 'db/conn.php';
 
         $zustandd = "COMPLETED";
-        $query = "SELECT * FROM orders WHERE arbeiterID = :id AND zustand != :zustandd";
-        $stmt = $pdo->prepare($query);
-        $stmt = $pdo->prepare($query);
-        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
-        $stmt->bindParam(':zustandd', $zustandd, PDO::PARAM_STR);
-        $stmt->execute();
-        
-        // rowcount
-        $numRows = $stmt->rowCount();
+        $query = "SELECT * FROM Orders WHERE arbeiterID = :id AND zustand != :zustandd";
+        try {
+            $stmt = $pdo->prepare($query);
+            $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+            $stmt->bindParam(':zustandd', $zustandd, PDO::PARAM_STR);
+            $stmt->execute();
+        } catch (PDOException $e) {
+            echo "Query error: " . $e->getMessage();
+        }
 
-        // if there are rows, do while loop
-        if ($numRows >  0) {
-            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-                $orderID = $row["orderID"];
-                $kundenID = $row["kundenID"];
-                $kundenName = $row["kundenName"];
-                $reparatur = "-";
-                $sanitaer = "-";
-                $heizung = "-";
-                $garantie = "-";
-                $zustand;
-                $color;
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            $orderID = $row["orderID"];
+            $kundenID = $row["kundenID"];
+            $kundenName = $row["kundenName"];
+            $reparatur = "-";
+            $sanitaer = "-";
+            $heizung = "-";
+            $garantie = "-";
+            $zustand;
+            $color;
 
-                if ($row["reparatur"] == '1') {
-                    $reparatur = "ja";
-                }
-                if ($row["sanitaer"] == '1') {
-                    $sanitaer = "ja";
-                }
-                if ($row["heizung"] == '1') {
-                    $heizung = "ja";
-                }
-                if ($row["garantie"] == '1') {
-                    $garantie = "ja";
-                }
-
-                if($row["zustand"] == "INPROGRESS"){$color = "lightblue"; $zustand = "in Bearbeitung";}
-                    else if($row["zustand"] == "TODO"){$color = "orange"; $zustand = "Zu Bearbeiten";}
-                    else if($row["zustand"] == "COMPLETED"){$color = "green"; $zustand = "Abgeschlossen";}
-
-                    echo '<div class="order-row">
-                    <div>'.$orderID.'</div>
-                    <div>'.$kundenID.'</div>
-                    <div>'.$kundenName.'</div>
-                    <div>'.$reparatur.'</div>
-                    <div>'.$sanitaer.'</div>
-                    <div>'.$heizung.'</div>
-                    <div>'.$garantie.'</div>
-                    <div style="color: '.$color.';">'.$zustand.'</div>
-                    <div>
-                    <form id="formZuteilung" style="width:auto; padding:0px;margin:0px;background-color:transparent;border:none;box-shadow:none;" method="post" action="rapporte.php">
-                        <button class="detail-btn" name="btn-id" id="btn-id" value="'.$orderID.'" data-id="'.$orderID.'">Rapport</button>
-                    </form>
-                    </div>
-                </div>';
+            if ($row["reparatur"] == '1') {
+                $reparatur = "ja";
             }
-        } else {echo "keine offenen Auträge!";}
+            if ($row["sanitaer"] == '1') {
+                $sanitaer = "ja";
+            }
+            if ($row["heizung"] == '1') {
+                $heizung = "ja";
+            }
+            if ($row["garantie"] == '1') {
+                $garantie = "ja";
+            }
+
+            if($row["zustand"] == "INPROGRESS"){$color = "lightblue"; $zustand = "in Bearbeitung";}
+                else if($row["zustand"] == "TODO"){$color = "orange"; $zustand = "Zu Bearbeiten";}
+                else if($row["zustand"] == "COMPLETED"){$color = "green"; $zustand = "Abgeschlossen";}
+
+                echo '<div class="order-row">
+                <div>'.$orderID.'</div>
+                <div>'.$kundenID.'</div>
+                <div>'.$kundenName.'</div>
+                <div>'.$reparatur.'</div>
+                <div>'.$sanitaer.'</div>
+                <div>'.$heizung.'</div>
+                <div>'.$garantie.'</div>
+                <div style="color: '.$color.';">'.$zustand.'</div>
+                <div>
+                <form id="formZuteilung" style="width:auto; padding:0px;margin:0px;background-color:transparent;border:none;box-shadow:none;" method="post" action="rapporte.php">
+                    <button class="detail-btn" name="btn-id" id="btn-id" value="'.$orderID.'" data-id="'.$orderID.'">Rapport</button>
+                </form>
+                </div>
+            </div>';
+        }
     ?>
         </div>
         <script src="script.js" defer></script>
