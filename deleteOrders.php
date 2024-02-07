@@ -16,7 +16,7 @@ include 'db/conn.php';
 </head>
 <body>
     <div class="container">
-        <h1>Dispose Orders</h1>
+        <h1>Delete Orders</h1>
         <div id="ordersContainer">
             <?php
             $query = "SELECT * FROM Orders";
@@ -63,13 +63,13 @@ include 'db/conn.php';
                 <div class="order-actions">
                     <form method="POST">
                         <input type="hidden" name="data_id" value="'.$orderID.'">
-                        <button type="submit" name="action" value="Dispose" class="detail-btn">Dispose</button>
+                        <button type="submit" name="action" value="Delete" class="detail-btn">Delete</button>
                     </form>
                 </div>
                 </div>';
             }
 
-            if (isset($_POST['action']) && $_POST['action'] === 'Dispose' && isset($_POST['data_id'])) {
+            if (isset($_POST['action']) && $_POST['action'] === 'Delete' && isset($_POST['data_id'])) {
                 disposeOrder($_POST['data_id']);
             }
             
@@ -86,11 +86,11 @@ include 'db/conn.php';
             
                 // Check if the deletion was successful
                 if ($stmt->rowCount() >  0) {
-                    echo "Order has been disposed.";
+                    echo "Order has been deleted.";
                     header('Location: ' . $_SERVER['REQUEST_URI']);
                     exit;
                 } else {
-                    echo "Failed to dispose of order.";
+                    echo "Failed to delete of order.";
                 }
             }
             

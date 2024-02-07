@@ -33,8 +33,8 @@
                                 <input type="submit" id="auftragserfassung" name="action" value="Order Entry">
                             </div>
                             <div class="tool-option">
-                                <span>Display All Orders:</span>
-                                <input type="submit" id="auftraege" name="action" value="Orders">
+                                <span>Dispose Orders:</span>
+                                <input type="submit" id="auftraege" name="action" value="Dispose Order">
                             </div>
                             <div class="tool-option">
                                 <span>Aufträge verrechnen:</span>
@@ -49,8 +49,8 @@
                                 <input type="submit" id="oAuftraege" name="action" value="All Orders">
                             </div>
                             <div class="tool-option">
-                                <span>Dispose Orders:</span>
-                                <input type="submit" id="oAuftraege" name="action" value="Dispose Orders">
+                                <span>Delete Orders:</span>
+                                <input type="submit" id="oAuftraege" name="action" value="Delete Orders">
                             </div>';
                     } else if ($_SESSION["role"] == 'MANAGER') {
                         // Manager tools
@@ -87,8 +87,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         header("Location: erfassung.php");
         exit();
     } // bt Orders
-    else if ($action == 'Orders') {
-        echo "Orders";
+    else if ($action == 'Dispose Order') {
+        echo "Dispose Order";
         header("Location: auftragZuteilung.php");
         exit();
     } // bt Rapporte
@@ -120,12 +120,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         session_destroy();
         header("Location: verrechnung.php");
         exit();
-    } // bt Dispose
-    else if ($action == 'Dispose Orders') {
-        echo "Dispose Orders";
+    } // bt Delete
+    else if ($action == 'Delete Orders') {
+        echo "Delete Orders";
         session_unset();
         session_destroy();
-        header("Location: disposeOrders.php");
+        header("Location: deleteOrders.php");
         exit();
     }
     
