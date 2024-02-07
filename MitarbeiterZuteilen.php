@@ -40,7 +40,7 @@ if (!isset($_SESSION["name"])) {
     $stmt->bindParam(':orderID', $_POST['data-btn'], PDO::PARAM_INT);
     $stmt->execute();
 
-    getAllEmployees();
+    $employees = getAllEmployees();
 
     while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
         $orderID = $row["orderID"];
@@ -79,22 +79,42 @@ if (!isset($_SESSION["name"])) {
                 <div>' . $heizung . '</div>
                 <div>' . $garantie . '</div>
                 <div style="color: ' . $color . ';">' . $zustand . '</div>
-                <div><select name="employee_id">';
+                <div>
+                <form id="formZuteilung" style="width:auto; padding:0px;margin:0px;background-color:transparent;border:none;box-shadow:none;" method="post" action="">
+                    <select name="employee_id">';
 
             foreach ($employees as $employee) {
-                echo '<option value="' . $employee['employeeID'] . '">' . $employee['employeeID'] . '</option>';
+                echo '<option value="' . $employee['id'] . '">' . $employee['id'] . ' - ' . $employee['username'] . '</option>';
             }
 
             echo '</select></div>
-                <div><button name="data-btn" value="'.$orderID.'" class="detail-btn" id="data-btn" data-id="'.$orderID.'">Zuteilen</button></div>
-            </div>';
+                <div>
+                
+                    <button name="submit-btn" value="'.$orderID.'" class="detail-btn" id="'.$orderID.'">Zuteilen</button>
+                </form>
+                </div>';
     }
 
-    if (isset($_POST['employee_id']) && isset($_POST['order_id'])) {
+    if (isset($_POST['submit-btn'])) {
+        $orderID = $_POST['submit-btn'];
+        $employeeID = $_POST['employee_id'];
+    
         $query = "UPDATE Orders SET arbeiterID = :employeeId WHERE orderID = :orderId";
         $stmt = $pdo->prepare($query);
+        $stmt->bindParam(':employeeId', $employeeID, PDO::PARAM_INT);
+        $stmt->bindParam(':orderId', $orderID, PDO::PARAM_INT);
+        $stmt->execute();
+    
+        // Optionally send a response back to the client
+        echo "Mitarbeiter wurde zugeteilt!";
+    }
+
+    function assignEmployee() {
+        $query = "UPDATE Orders SET arbeiterID = :employeeId, zustand = :zustandd WHERE orderID = :orderId";
+        $stmt = $pdo->prepare($query);
         $stmt->bindParam(':employeeId', $_POST['employee_id'], PDO::PARAM_INT);
-        $stmt->bindParam(':orderId', $_POST['order_id'], PDO::PARAM_INT);
+        $stmt->bindParam(':orderId', $orderID, PDO::PARAM_INT);
+        $stmt->bindParam(':zustandd', "INPROGRESS");
         $stmt->execute();
         // Redirect back to the original page after assignment
         header('Location:auftragZuteilung.php');
@@ -120,20 +140,6 @@ if (!isset($_SESSION["name"])) {
             return $employees;
         } catch(PDOException $e) {
             echo 'Connection failed: ' . $e->getMessage();
-        }
-    }
-    
-    // Funktion zum Zuweisen eines Auftrags an einen Mitarbeiter
-    function assignOrderToEmployee($order_id, $employee_id) {
-        include 'db/conn.php';
-        $sql = "UPDATE Orders SET arbeiterID = $employee_id WHERE id = $order_id";
-        if (mysqli_query($conn, $sql)) {
-            mysqli_close($conn);
-            return true;
-        } else {
-            echo "Fehler beim Zuweisen des Auftrags: " . mysqli_error($conn);
-            mysqli_close($conn);
-            return false;
         }
     }
 ?>

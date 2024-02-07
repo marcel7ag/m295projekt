@@ -32,7 +32,7 @@ function printdiv(elem) {
 }
 
 document.getElementById('formZuteilung').addEventListener('submit', function(event) {
-    var dataIdElement = document.getElementById('data-btn'); // Replace with your actual element ID
+    var dataIdElement = document.getElementById('data-btn'); 
     var dataIdValue = dataIdElement.getAttribute('data-id'); // Get the data-id value
     document.getElementById('dataIdField').value = dataIdValue; // Set the value to the hidden input field
 });
