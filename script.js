@@ -30,3 +30,9 @@ function printdiv(elem) {
   document.body.innerHTML = old_str;
   return false;
 }
+
+document.getElementById('formZuteilung').addEventListener('submit', function(event) {
+    var dataIdElement = document.getElementById('data-btn'); // Replace with your actual element ID
+    var dataIdValue = dataIdElement.getAttribute('data-id'); // Get the data-id value
+    document.getElementById('dataIdField').value = dataIdValue; // Set the value to the hidden input field
+});

@@ -76,8 +76,9 @@ if (!isset($_SESSION["name"])) {
                 <div>'.$heizung.'</div>
                 <div>'.$garantie.'</div>
                 <div style="color: '.$color.';">'.$zustand.'</div>
-                <form style="width:auto;" method="post">
-                    <div><button class="detail-btn" data-id="'.$orderID.'">Zuteilen</button></div>
+                <form id="formZuteilung" style="width:auto; padding:0px;margin:0px;background-color:transparent;border:none;box-shadow:none;" method="post" action="MitarbeiterZuteilen.php">
+                    <div><button name="data-btn" value="'.$orderID.'" class="detail-btn" id="data-btn" data-id="'.$orderID.'">Zuteilen</button></div>
+                    <input type="hidden" id="dataIdField" name="dataId" />
                 </form>
             </div>';
         }
