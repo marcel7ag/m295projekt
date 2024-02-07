@@ -13,26 +13,26 @@ if (!isset($_SESSION["name"])) {
 
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style/style.css">
-    <title>Alle Aufträge</title>
-</head>
-<body>
-    <table class="oTable" border="0" cellspacing="2" cellpadding="2"> 
-        <tr class="tableT"> 
-            <td>ID</td>
-            <td>KundenID</td>  
-            <td>KundenName</td> 
-            <td>Reparatur</td> 
-            <td>Sanitär</td>
-            <td>Heizung</td>
-            <td>Garantie</td>
-            <td>Zustand</td>
-            <td>Auftragdetails</td>
-        </tr>
-    <?php
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="style/style.css">
+        <title>Alle Aufträge</title>
+    </head>
+    <body>
+        <div class="orders-container">
+            <div class="orders-header">
+                <div>ID</div>
+                <div>KundenID</div>
+                <div>KundenName</div>
+                <div>Reparatur</div>
+                <div>Sanitär</div>
+                <div>Heizung</div>
+                <div>Garantie</div>
+                <div>Zustand</div>
+                <div>Auftragdetails</div>
+            </div>
+        <?php
     require 'db/conn.php';
     
     $query = "SELECT * FROM Orders";
@@ -67,24 +67,22 @@ if (!isset($_SESSION["name"])) {
                 else if($row["zustand"] == "TODO"){$color = "orange"; $zustand = "Zu Bearbeiten";}
                 else if($row["zustand"] == "COMPLETED"){$color = "green"; $zustand = "Abgeschlossen";}
 
-            echo '<tr> 
-            <td>'.$orderID.'</td> 
-            <td>'.$kundenID.'</td> 
-            <td>'.$kundenName.'</td> 
-            <td>'.$reparatur.'</td>
-            <td>'.$sanitaer.'</td>
-            <td>'.$heizung.'</td>
-            <td>'.$garantie.'</td>
-            <td style="color: '.$color.';">'.$zustand.'</td>
-            <td><button class="detail-btn" data-id="'.$orderID.'">Details</button></td> 
-            </tr>';
+                echo '<div class="order-row">
+                <div>'.$orderID.'</div>
+                <div>'.$kundenID.'</div>
+                <div>'.$kundenName.'</div>
+                <div>'.$reparatur.'</div>
+                <div>'.$sanitaer.'</div>
+                <div>'.$heizung.'</div>
+                <div>'.$garantie.'</div>
+                <div style="color: '.$color.';">'.$zustand.'</div>
+                <div><button class="detail-btn" data-id="'.$orderID.'">Details</button></div>
+            </div>';
         }
-    echo '</table>';
     
 ?>
-    
+        </div>
         <script src="script.js" defer></script>
     </body>
 </html>
-
 

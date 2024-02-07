@@ -19,59 +19,58 @@
         <link rel="stylesheet" href="style/style.css">
         <title>Welcome</title>
     </head>
-
     <body>
         <form method="post">
-            <div class="container">
-                <h1 id="hellouser"><?php echo "Hello " . $_SESSION["name"]; ?></h1>
-                <input type="submit" name="action" value="Logout">
-                <div id="auftragErfassen">
-                    <h2>Tools</h2>  
-                    <?php
-                        if ($_SESSION["role"] == 'ADMIN') {
-                            echo   '<div class="tool-option">
-                                        <span>Order Entry:</span>
-                                        <input type="submit" id="auftragserfassung" name="action" value="Order Entry">
-                                    </div>
-                                    <div class="tool-option">
-                                        <span>Display All Orders:</span>
-                                        <input type="submit" id="auftraege" name="action" value="Orders">
-                                    </div>
-                                    <div class="tool-option">
-                                        <span>Aufträge verrechnen:</span>
-                                        <input type="submit" id="verrechnung" name="action" value="Verrechnung">
-                                    </div>
-                                    <div class="tool-option">
-                                        <span>Edit Your Open Orders:</span>
-                                        <input type="submit" id="oAuftraege" name="action" value="Open Orders">
-                                    </div>
-                                    <div class="tool-option">
-                                    <span>See all Orders:</span>
-                                    <input type="submit" id="oAuftraege" name="action" value="All Orders">
-                                    </div>';
-                        }
-                        else if ($_SESSION["role"] == 'MANAGER') {
-                            echo   '<div class="tool-option">
-                                        <span>Aufträge zuteilen:</span>
-                                        <input type="submit" id="auftraege" name="action" value="Orders">
-                                    </div>
-                                    <div class="tool-option">
-                                        <span>Rapporte ansehen:</span>
-                                        <input type="submit" id="oAuftraege" name="action" value="Rapporte">
-                                    </div>';
-                        }
-                        else if ($_SESSION["role"] == 'ARBEITER') {
-                            echo   '<div class="tool-option">
-                                        <span>Edit Your Open Orders:</span>
-                                        <input type="submit" id="oAuftraege" name="action" value="Open Orders">
-                                    </div>';
-                        }
-                    ?>
-                </div>
+            <h1 id="hellouser"><?php echo "Hello " . $_SESSION["name"]; ?></h1>
+            <input type="submit" name="action" value="Logout">
+            <div id="auftragErfassen">
+                <h2>Tools</h2>
+                <?php
+                    if ($_SESSION["role"] == 'ADMIN') {
+                        // Admin tools
+                        echo '<div class="tool-option">
+                                <span>Order Entry:</span>
+                                <input type="submit" id="auftragserfassung" name="action" value="Order Entry">
+                            </div>
+                            <div class="tool-option">
+                                <span>Display All Orders:</span>
+                                <input type="submit" id="auftraege" name="action" value="Orders">
+                            </div>
+                            <div class="tool-option">
+                                <span>Aufträge verrechnen:</span>
+                                <input type="submit" id="verrechnung" name="action" value="Verrechnung">
+                            </div>
+                            <div class="tool-option">
+                                <span>Edit Your Open Orders:</span>
+                                <input type="submit" id="oAuftraege" name="action" value="Open Orders">
+                            </div>
+                            <div class="tool-option">
+                                <span>See all Orders:</span>
+                                <input type="submit" id="oAuftraege" name="action" value="All Orders">
+                            </div>';
+                    } else if ($_SESSION["role"] == 'MANAGER') {
+                        // Manager tools
+                        echo '<div class="tool-option">
+                                <span>Aufträge zuteilen:</span>
+                                <input type="submit" id="auftraege" name="action" value="Orders">
+                            </div>
+                            <div class="tool-option">
+                                <span>Rapporte ansehen:</span>
+                                <input type="submit" id="oAuftraege" name="action" value="Rapporte">
+                            </div>';
+                    } else if ($_SESSION["role"] == 'ARBEITER') {
+                        // Arbeiter tools
+                        echo '<div class="tool-option">
+                                <span>Edit Your Open Orders:</span>
+                                <input type="submit" id="oAuftraege" name="action" value="Open Orders">
+                            </div>';
+                    }
+                ?>
             </div>
         </form>
     </body>
 </html>
+
 
 <?php // for user.php
 
