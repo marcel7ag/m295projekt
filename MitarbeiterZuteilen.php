@@ -98,26 +98,17 @@ if (!isset($_SESSION["name"])) {
     if (isset($_POST['submit-btn'])) {
         $orderID = $_POST['submit-btn'];
         $employeeID = $_POST['employee_id'];
+        $zustand = "INPROGRESS";
     
-        $query = "UPDATE Orders SET arbeiterID = :employeeId WHERE orderID = :orderId";
+        $query = "UPDATE Orders SET arbeiterID = :employeeId, zustand = :zustandd WHERE orderID = :orderId";
         $stmt = $pdo->prepare($query);
         $stmt->bindParam(':employeeId', $employeeID, PDO::PARAM_INT);
         $stmt->bindParam(':orderId', $orderID, PDO::PARAM_INT);
+        $stmt->bindParam(':zustandd', $zustand, PDO::PARAM_STR);
         $stmt->execute();
     
         // Optionally send a response back to the client
         echo "Mitarbeiter wurde zugeteilt!";
-    }
-
-    function assignEmployee() {
-        $query = "UPDATE Orders SET arbeiterID = :employeeId, zustand = :zustandd WHERE orderID = :orderId";
-        $stmt = $pdo->prepare($query);
-        $stmt->bindParam(':employeeId', $_POST['employee_id'], PDO::PARAM_INT);
-        $stmt->bindParam(':orderId', $orderID, PDO::PARAM_INT);
-        $stmt->bindParam(':zustandd', "INPROGRESS", PDO::PARAM_STR);
-        $stmt->execute();
-        // Redirect back to the original page after assignment
-        header('Location:auftragZuteilung.php');
     }
     
     function getAllEmployees() {
