@@ -187,11 +187,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         // Prepare the SQL statement with placeholders
         $stmt = $pdo->prepare("INSERT INTO Orders (
-            kundenID, kundenName, objAdresse, objOrt, objPLZ, rechID, orderDate, orderTime,
+            kundenID, kundenName, objAdresse, objOrt, objPLZ, rechID, orderDate,
             reparatur, sanitaer, heizung, garantie, bemerkung, terminwunsch, zustand, arbeiterID,
             completed, completedDate
         ) VALUES (
-            :kundenID, :kundenName, :objAdresse, :objOrt, :objPLZ, :rechID, :orderDate, :orderTime,
+            :kundenID, :kundenName, :objAdresse, :objOrt, :objPLZ, :rechID, :orderDate,
             :reparatur, :sanitaer, :heizung, :garantie, :bemerkung, :terminwunsch, :zustand, :arbeiterID,
             :completed, :completedDate
         )");
@@ -199,6 +199,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $kAnrede = $_POST['kAnrede'] ?? '';
         $kVorname = $_POST['kVorname'] ?? '';
         $kNachname = $_POST['kNachname'] ?? '';
+        
+        // make $date for orderDate
+        $date = date('d-m-Y H:i:s');
         
         // Only construct the full name if all parts are present
         if (!empty($kAnrede) && !empty($kVorname) && !empty($kNachname)) {
@@ -219,8 +222,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $stmt->bindParam(':objOrt', $objOrt);
         $stmt->bindParam(':objPLZ', $objPLZ);
         $stmt->bindParam(':rechID', $rechID);
-        $stmt->bindParam(':orderDate', $orderDate);
-        $stmt->bindParam(':orderTime', $orderTime);
+        $stmt->bindParam(':orderDate', $date);
         $stmt->bindParam(':reparatur', $reparatur);
         $stmt->bindParam(':sanitaer', $sanitaer);
         $stmt->bindParam(':heizung', $heizung);
@@ -237,8 +239,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $objAdresse = $_POST['objAdresse'];
         $objOrt = $_POST['objOrt'];
         $objPLZ = $_POST['objPLZ'];
-        $orderDate = $_POST['auftragsDatum'];
-        $orderTime = $_POST['zeit'];
+        $orderDate = $_POST['auftragsDatum'] . ' ' . $_POST['zeit'];
         $rechID = random_int(1,10000); // random rechnungsID
         $reparatur = isset($_POST['reparatur']) ? 1 : 0;
         $sanitaer = isset($_POST['sanitaer']) ? 1 : 0;
