@@ -99,7 +99,7 @@ function insertSample($pdo) {
         ('Frau', 'Schmidt', 'Anna', 'Im Park', 'München', 123456),
         ('Frau', 'Fischer', 'Lisa', 'An der Kirche', 'Hamburg', 8048)");
 
-        // create orderDate  format: 'dd-mm-yyyy hh:mm:ss'
+        // create orderDate  format: 'dd-mm-yyyy hh:mm:ss' -> take current date
         $date = date('d-m-Y H:i:s');
         // Insert sample data into Orders table
         $pdo->exec("INSERT INTO Orders (kundenID, kundenName, objAdresse, objOrt, objPLZ, rechID, orderDate, reparatur, sanitaer, heizung, garantie, bemerkung, terminwunsch, zustand, arbeiterID, completed, completedDate) VALUES 
