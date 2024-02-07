@@ -61,13 +61,37 @@ include 'db/conn.php';
                 <span class="garantie">'.$garantie.'</span>
                 <span class="zustand" style="color: '.$color.';">'.$zustand.'</span>
                 <div class="order-actions">
-                    <form>
+                    <form method="POST">
                         <input type="hidden" name="data_id" value="'.$orderID.'">
-                        <button type="submit" name="action" class="detail-btn">Dispose</button>
+                        <button type="submit" name="action" value="Dispose" class="detail-btn">Dispose</button>
                     </form>
                 </div>
                 </div>';
             }
+
+            if (isset($_POST['action']) && $_POST['action'] === 'Dispose' && isset($_POST['data_id'])) {
+                disposeOrder($_POST['data_id']);
+            }
+            
+            function disposeOrder($orderId) {
+                global $pdo;
+            
+                // Prepare the SQL statement to delete the order
+                $sql = "DELETE FROM Orders WHERE orderID = :orderId";
+                $stmt = $pdo->prepare($sql);
+            
+                // Execute the statement with the provided order ID
+                $stmt->bindParam(':orderId', $orderId, PDO::PARAM_INT);
+                $stmt->execute();
+            
+                // Check if the deletion was successful
+                if ($stmt->rowCount() >  0) {
+                    echo "Order has been disposed.";
+                } else {
+                    echo "Failed to dispose of order.";
+                }
+            }
+            
             ?>
         </div>
         <script src="script.js"></script>
