@@ -114,7 +114,7 @@ if (!isset($_SESSION["name"])) {
         $stmt = $pdo->prepare($query);
         $stmt->bindParam(':employeeId', $_POST['employee_id'], PDO::PARAM_INT);
         $stmt->bindParam(':orderId', $orderID, PDO::PARAM_INT);
-        $stmt->bindParam(':zustandd', "INPROGRESS");
+        $stmt->bindParam(':zustandd', "INPROGRESS", PDO::PARAM_STR);
         $stmt->execute();
         // Redirect back to the original page after assignment
         header('Location:auftragZuteilung.php');
