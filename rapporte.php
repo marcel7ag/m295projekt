@@ -94,11 +94,13 @@ if (!isset($_SESSION["name"])) {
     if (isset($_POST['submit-btn'])) {
         $orderID = $_POST['submit-btn'];
         $zustand = "COMPLETE";
+        $rapport = $_POST['rapport'];
     
-        $query = "UPDATE Orders SET zustand = :zustandd WHERE orderID = :orderId";
+        $query = "UPDATE Orders SET zustand = :zustandd, rapport = :rapportt WHERE orderID = :orderId";
         $stmt = $pdo->prepare($query);
         $stmt->bindParam(':orderId', $orderID, PDO::PARAM_INT);
         $stmt->bindParam(':zustandd', $zustand, PDO::PARAM_STR);
+        $stmt->bindParam(':zustandd', $rapport, PDO::PARAM_STR);
         $stmt->execute();
     
         // Optionally send a response back to the client
