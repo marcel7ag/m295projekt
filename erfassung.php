@@ -111,7 +111,7 @@ if (!isset($_SESSION["name"])) {
 </html>
 <?php // insertOrder.
 include 'db/conn.php';
-print("Test insertOrder.php");
+// print("Test insertOrder.php");
 // Assuming the form is submitted via POST
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     try {
@@ -138,7 +138,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             // TO DO:
             //---
             try {
-                echo "Kunde wird erstellt:";
+                // echo "Kunde wird erstellt:";
                 $stmt = $pdo->prepare("INSERT INTO Kunden (kName, kVorname, kAdresse, kOrt, kPLZ, kTelefon, kGender) VALUES (:kName, :kVorname, :kAdresse, :kOrt, :kPLZ, :kTelefon, :kGender)");
                 
                 // Bind parameters to the placeholders
@@ -157,14 +157,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $kPLZ = $_POST['kPLZ'] ?? null;
                 $kTelefon = $_POST['kTelefon'] ?? null;
                 // set Gender for db
-                if ($_POST['kAnrede'] == "rechM") { 
+                if ($_POST['kAnrede'] == "m") { 
                     $kGender = "MALE";} 
                 else { 
                     $kGender = "FEMALE"; }
 
                 // Execute the statement
                 $stmt->execute();
-                echo "Kunde wurde erstellt";
+                // echo "Kunde wurde erstellt";
 
                 $stmt = $pdo->prepare("SELECT id FROM Kunden WHERE kVorname COLLATE NOCASE = :kVorname AND kName COLLATE NOCASE = :kName AND kAdresse COLLATE NOCASE = :kAdresse");
                 // Bind parameters to the placeholders
@@ -213,7 +213,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
 
         // $kundenName = $_POST['kundenName'] ?? '';
-        echo $kGender;
+        // echo $kGender;
         // var_dump($_SESSION);
         // Bind the form data to the placeholders
         $stmt->bindParam(':kundenID', $kID);
