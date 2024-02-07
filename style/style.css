@@ -44,10 +44,17 @@ input[type="submit"], button {
     color: #fff;
     cursor: pointer;
 }
-
 input[type="submit"]:hover, button:hover{
     background-color: #0056b3;
     transition: all 0.3s;
+}
+
+input[value="Logout"]{
+    background-color: rgb(175, 0, 0);
+}
+
+input[value="Logout"]:hover{
+    background-color: rgb(111, 0, 0);
 }
 
 /* Checkbox styles */

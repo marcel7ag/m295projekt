@@ -22,7 +22,7 @@
     <body>
         <form method="post">
             <h1 id="hellouser"><?php echo "Hello " . $_SESSION["name"]; ?></h1>
-            <input type="submit" name="action" value="Logout">
+            <input class="logout" type="submit" name="action" value="Logout">
             <div id="auftragErfassen">
                 <h2>Tools</h2>
                 <?php
@@ -33,16 +33,8 @@
                                 <input type="submit" id="auftragserfassung" name="action" value="Order Entry">
                             </div>
                             <div class="tool-option">
-                                <span>Aufträge zuteilen:</span>
-                                <input type="submit" id="auftraege" name="action" value="Dispose Order">
-                            </div>
-                            <div class="tool-option">
                                 <span>Aufträge verrechnen:</span>
                                 <input type="submit" id="verrechnung" name="action" value="Verrechnung">
-                            </div>
-                            <div class="tool-option">
-                                <span>Ihre offenen Aufträge:</span>
-                                <input type="submit" id="oAuftraege" name="action" value="Open Orders">
                             </div>
                             <div class="tool-option">
                                 <span>Alle Aufträge sehen:</span>
@@ -51,20 +43,20 @@
                             <div class="tool-option">
                                 <span>Aufträge löschen:</span>
                                 <input type="submit" id="oAuftraege" name="action" value="Delete Orders">
-                            </div>
-                            <div class="tool-option">
-                                <span>Rapporte prüfen:</span>
-                                <input type="submit" id="oAuftraege" name="action" value="Rapporte prüfen">
                             </div>';
                     } else if ($_SESSION["role"] == 'MANAGER') {
                         // Manager tools
                         echo '<div class="tool-option">
                                 <span>Aufträge zuteilen:</span>
-                                <input type="submit" id="auftraege" name="action" value="Orders">
+                                <input type="submit" id="auftraege" name="action" value="Dispose Order">
                             </div>
                             <div class="tool-option">
-                                <span>Rapporte ansehen:</span>
-                                <input type="submit" id="oAuftraege" name="action" value="Rappore">
+                                <span>Alle Aufträge sehen:</span>
+                                <input type="submit" id="oAuftraege" name="action" value="All Orders">
+                            </div>
+                            <div class="tool-option">
+                                <span>Rapporte prüfen:</span>
+                                <input type="submit" id="oAuftraege" name="action" value="Rapporte prüfen">
                             </div>';
                     } else if ($_SESSION["role"] == 'ARBEITER') {
                         // Arbeiter tools
