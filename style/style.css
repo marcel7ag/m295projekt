@@ -127,7 +127,7 @@ input[type="submit"]:hover, button:hover{
     align-items: center;
     background-color: #333;
     border-radius:  5px;
-    margin:  15% auto; /* Center the table horizontally */
+    margin: 15% auto;
     padding:  6px;
     overflow-x: auto; /* Make it scrollable if content overflows */
 }
