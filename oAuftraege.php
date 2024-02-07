@@ -38,9 +38,19 @@ $id = $_SESSION['id'];
     <?php
         require 'db/conn.php';
 
-        $query = "SELECT * FROM orders WHERE arbeiterID = $id";
+        $zustandd = "COMPLETED";
+        $query = "SELECT * FROM orders WHERE arbeiterID = :id AND zustand != :zustandd";
         $stmt = $pdo->prepare($query);
+        $stmt = $pdo->prepare($query);
+        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+        $stmt->bindParam(':zustandd', $zustandd, PDO::PARAM_STR);
         $stmt->execute();
+        
+        // rowcount
+        $numRows = $stmt->rowCount();
+
+        // if there are rows, do while loop
+        if ($numRows >  0) {
             while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
                 $orderID = $row["orderID"];
                 $kundenID = $row["kundenID"];
@@ -85,6 +95,7 @@ $id = $_SESSION['id'];
                     </div>
                 </div>';
             }
+        } else {echo "keine offenen Auträge!";}
     ?>
         </div>
         <script src="script.js" defer></script>

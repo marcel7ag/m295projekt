@@ -81,8 +81,8 @@ if (!isset($_SESSION["name"])) {
             echo '<form id="formZuteilung" style="width:auto; padding:0px;margin:0px;background-color:transparent;border:none;box-shadow:none;" method="post" action="">
                     <div style="margin:15px;">
                         <div>
-                        <label style="display:block;" for="report">Rapport:</label>
-                        <textarea style="width:600px; height:225px;" id="report" name="report"></textarea>
+                            <label style="display:block;" for="report">Rapport:</label>
+                            <textarea style="width:600px; height:225px;" id="report" name="report"></textarea>
                         </div>
                         <div>
                             <button class="detail-btn" style="width:auto;display:flex;margin:auto auto;" name="btn-id" id="btn-id" value="'.$orderID.'" data-id="'.$orderID.'">abschliessen</button>
@@ -91,16 +91,16 @@ if (!isset($_SESSION["name"])) {
                     ';
     }
 
-    if (isset($_POST['submit-btn'])) {
-        $orderID = $_POST['submit-btn'];
-        $zustand = "COMPLETE";
-        $rapport = $_POST['rapport'];
+    if (isset($_POST['btn-id'])) {
+        $orderID = $_POST['btn-id'];
+        $zustand = "COMPLETED";
+        $rapport = isset($_POST['report']) ? $_POST['report'] : '';
     
         $query = "UPDATE Orders SET zustand = :zustandd, rapport = :rapportt WHERE orderID = :orderId";
         $stmt = $pdo->prepare($query);
         $stmt->bindParam(':orderId', $orderID, PDO::PARAM_INT);
         $stmt->bindParam(':zustandd', $zustand, PDO::PARAM_STR);
-        $stmt->bindParam(':zustandd', $rapport, PDO::PARAM_STR);
+        $stmt->bindParam(':rapportt', $rapport, PDO::PARAM_STR);
         $stmt->execute();
     
         // Optionally send a response back to the client
