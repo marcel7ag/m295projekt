@@ -24,8 +24,8 @@ if (!isset($_SESSION["name"])) {
     require 'db/conn.php';
 
     $completed = "COMPLETED";
-    $verrechnet = "FALSE";
-    $query = "SELECT * FROM Orders WHERE zustand = :completed AND verrechnet = :verrechnet";
+    $verrechnet = "TRUE";
+    $query = "SELECT * FROM Orders WHERE zustand = :completed AND verrechnet != :verrechnet";
     $stmt = $pdo->prepare($query);
     $stmt->bindParam(':completed', $completed, PDO::PARAM_STR);
     $stmt->bindParam(':verrechnet', $verrechnet, PDO::PARAM_STR);
