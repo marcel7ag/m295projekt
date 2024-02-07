@@ -87,6 +87,8 @@ include 'db/conn.php';
                 // Check if the deletion was successful
                 if ($stmt->rowCount() >  0) {
                     echo "Order has been disposed.";
+                    header('Location: ' . $_SERVER['REQUEST_URI']);
+                    exit;
                 } else {
                     echo "Failed to dispose of order.";
                 }
