@@ -157,7 +157,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $kPLZ = $_POST['kPLZ'] ?? null;
                 $kTelefon = $_POST['kTelefon'] ?? null;
                 // set Gender for db
-                if ($_POST['kAnrede'] == "m") { 
+                if ($_POST['kAnrede'] == "rechM") { 
                     $kGender = "MALE";} 
                 else { 
                     $kGender = "FEMALE"; }

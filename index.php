@@ -98,7 +98,7 @@ function validateAndRegisterUser() {
             include 'header.php'; // only header tag with navigation & logout button
             ?>
         <form method="post">
-            <h1>Registrieren oder Login</h1>
+            <h1>Anmeldung</h1>
             <div class="name-field">
                 Name: <input type="text" name="username"><br><br>
             </div>

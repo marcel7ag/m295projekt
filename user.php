@@ -21,62 +21,6 @@
     </head>
     <body>
         <form method="post">
-            <div class="container">
-                <h1 id="hellouser"><?php echo "Hello " . $_SESSION["name"]; ?></h1>
-                <input type="submit" name="action" value="Logout">
-                <div id="auftragErfassen">
-                    <h2>Tools</h2>  
-                    <?php
-                        if ($_SESSION["role"] == 'ADMIN') {
-                            echo   '<div class="tool-option">
-                                        <span>Order Entry:</span>
-                                        <input type="submit" id="auftragserfassung" name="action" value="Order Entry">
-                                    </div>
-                                    <div class="tool-option">
-                                        <span>Display All Orders:</span>
-                                        <input type="submit" id="auftraege" name="action" value="Orders">
-                                    </div>
-                                    <div class="tool-option">
-                                        <span>Aufträge verrechnen:</span>
-                                        <input type="submit" id="verrechnung" name="action" value="Verrechnung">
-                                    </div>
-                                    <div class="tool-option">
-                                        <span>Edit Your Open Orders:</span>
-                                        <input type="submit" id="oAuftraege" name="action" value="Open Orders">
-                                    </div>
-                                    <div class="tool-option">
-                                    <span>See all Orders:</span>
-                                    <input type="submit" id="oAuftraege" name="action" value="All Orders">
-                                    </div>
-                                    <div class="tool-option">
-                                    <span>Dispose Orders:</span>
-                                    <input type="submit" id="oAuftraege" name="action" value="Dispose Orders">
-                                    </div>';
-                        }
-                        else if ($_SESSION["role"] == 'MANAGER') {
-                            echo   '<div class="tool-option">
-                                        <span>Aufträge zuteilen:</span>
-                                        <input type="submit" id="auftraege" name="action" value="Orders">
-                                    </div>
-                                    <div class="tool-option">
-                                        <span>Rapporte ansehen:</span>
-                                        <input type="submit" id="oAuftraege" name="action" value="Rapporte">
-                                    </div>
-                                    </div>
-                                    <div class="tool-option">
-                                    <span>Dispose Orders:</span>
-                                    <input type="submit" id="oAuftraege" name="action" value="Dispose Orders">
-                                    </div>';
-                                    
-                        }
-                        else if ($_SESSION["role"] == 'ARBEITER') {
-                            echo   '<div class="tool-option">
-                                        <span>Edit Your Open Orders:</span>
-                                        <input type="submit" id="oAuftraege" name="action" value="Open Orders">
-                                    </div>';
-                        }
-                    ?>
-                </div>
             <h1 id="hellouser"><?php echo "Hello " . $_SESSION["name"]; ?></h1>
             <input type="submit" name="action" value="Logout">
             <div id="auftragErfassen">
@@ -166,18 +110,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         header("Location: index.php");
         exit();
     } // bt Verrechnung
-    else if ($action == 'Verrechnung') {
+    else if ($action == 'Logout') {
         echo "Verrechnung";
         session_unset();
         session_destroy();
         header("Location: verrechnung.php");
-        exit();
-    } // bt Dispose Orders
-    else if ($action == 'Dispose Orders') {
-        echo "Dispose";
-        session_unset();
-        session_destroy();
-        header("Location: disposeOrders.php");
         exit();
     }
     
