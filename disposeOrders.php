@@ -7,85 +7,71 @@ include 'db/conn.php';
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="style/style.css">
-        <title>Dispose Orders</title>
-    </head>
-    <table class="oTable" border="0" cellspacing="2" cellpadding="2"> 
-        <tr class="tableT"> 
-            <td>ID</td>
-            <td>KundenID</td>  
-            <td>KundenName</td> 
-            <td>Reparatur</td> 
-            <td>Sanitär</td>
-            <td>Heizung</td>
-            <td>Garantie</td>
-            <td>Zustand</td>
-            <td>Auftragdetails</td>
-        </tr>
-    <body>
-        <?php
-        $query = "SELECT * FROM Orders";
-        $stmt = $pdo->prepare($query);
-        $stmt->execute();
-    
-        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-            $orderID = $row["orderID"];
-            $kundenID = $row["kundenID"];
-            $kundenName = $row["kundenName"];
-            $reparatur = "-";
-            $sanitaer = "-";
-            $heizung = "-";
-            $garantie = "-";
-            $zustand;
-            $color;
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style/auftragerfassen.css">  
+    <title>Auftragsverwaltung</title>
+</head>
+<body>
+    <div class="container">
+        <h1>Dispose Orders</h1>
+        <div id="ordersContainer">
+            <?php
+            $query = "SELECT * FROM Orders";
+            $stmt = $pdo->prepare($query);
+            $stmt->execute();
+            
+            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                $orderID = $row["orderID"];
+                $kundenID = $row["kundenID"];
+                $kundenName = $row["kundenName"];
+                $reparatur = "-";
+                $sanitaer = "-";
+                $heizung = "-";
+                $garantie = "-";
+                $zustand;
+                $color;
 
-            if ($row["reparatur"] == '1') {
-                $reparatur = "ja";
-            }
-            if ($row["sanitaer"] == '1') {
-                $sanitaer = "ja";
-            }
-            if ($row["heizung"] == '1') {
-                $heizung = "ja";
-            }
-            if ($row["garantie"] == '1') {
-                $garantie = "ja";
-            }
+                if ($row["reparatur"] == '1') {
+                    $reparatur = "ja";
+                }
+                if ($row["sanitaer"] == '1') {
+                    $sanitaer = "ja";
+                }
+                if ($row["heizung"] == '1') {
+                    $heizung = "ja";
+                }
+                if ($row["garantie"] == '1') {
+                    $garantie = "ja";
+                }
 
-            if($row["zustand"] == "INPROGRESS"){$color = "lightblue"; $zustand = "in Bearbeitung";}
+                if($row["zustand"] == "INPROGRESS"){$color = "lightblue"; $zustand = "in Bearbeitung";}
                 else if($row["zustand"] == "TODO"){$color = "orange"; $zustand = "Zu Bearbeiten";}
                 else if($row["zustand"] == "COMPLETED"){$color = "green"; $zustand = "Abgeschlossen";}
 
-            echo '<tr> 
-            <td>'.$orderID.'</td> 
-            <td>'.$kundenID.'</td> 
-            <td>'.$kundenName.'</td> 
-            <td>'.$reparatur.'</td>
-            <td>'.$sanitaer.'</td>
-            <td>'.$heizung.'</td>
-            <td>'.$garantie.'</td>
-            <td style="color: '.$color.';">'.$zustand.'</td>
-            <td><form><input type="hidden" name="data_id" value="'.$orderID.'"><button type="submit" name="action" class="detail-btn">Dispose</button></form></td>
-            </tr>';
-        }
-        echo '</table>';
-
-        if ($_SERVER["REQUEST_METHOD"] == "POST") {
-            $action = $_POST['action'];
-            if ($action == 'Dispose') {
-                $data_id = $_POST['data_id']; // This is the orderID from the hidden input field
-                $query = "DELETE FROM Orders WHERE id = :orderID";
-                $stmt = $pdo->prepare($query);
-                $stmt->bindParam(':orderID', $data_id, PDO::PARAM_INT);
-                $stmt->execute();
+                echo '<div class="order-item">  
+                <span class="order-id">'.$orderID.'</span>  
+                <span class="kunden-id">'.$kundenID.'</span>  
+                <span class="kunden-name">'.$kundenName.'</span>  
+                <span class="reparatur">'.$reparatur.'</span>
+                <span class="sanitaer">'.$sanitaer.'</span>
+                <span class="heizung">'.$heizung.'</span>
+                <span class="garantie">'.$garantie.'</span>
+                <span class="zustand" style="color: '.$color.';">'.$zustand.'</span>
+                <div class="order-actions">
+                    <form>
+                        <input type="hidden" name="data_id" value="'.$orderID.'">
+                        <button type="submit" name="action" class="detail-btn">Dispose</button>
+                    </form>
+                </div>
+                </div>';
             }
-        }        
-        ?>
-        </table>
-        <script src="script.js" defer></script>
-    </body>
+            ?>
+        </div>
+        <script src="script.js"></script>
+    </div>
+</body>
 </html>
+
