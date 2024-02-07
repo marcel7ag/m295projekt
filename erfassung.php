@@ -101,7 +101,7 @@ if (!isset($_SESSION["name"])) {
                         <!-- Modified button to submit the form -->
                         <button type="submit" id="submit" name="submit">Auftrag erfassen</button>
                         <!-- btn to "print" the form with function printDocument() -->
-                        <button type="button" id="print" name="print" onclick="printdiv('container')">Drucken</button>
+                        <button type="button" id="print" name="print" onclick="printDocument()">Drucken</button>
                     </div>
                 </form>
             </div><!-- end auftragErfassen -->

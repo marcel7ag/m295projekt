@@ -77,7 +77,8 @@ function insertSample($pdo) {
         $users = [
             ['admin', 'Bene1234!_', 'ADMIN'],
             ['manager', 'Bene1234!_', 'MANAGER'],
-            ['arbeiter', 'Bene1234!_', 'ARBEITER']
+            ['arbeiter', 'Bene1234!_', 'ARBEITER'],
+            ['arbeiter2', 'Bene1234!_', 'ARBEITER']
         ];
         // Iterate through each user and hash their password
         foreach ($users as $user) {
@@ -91,21 +92,27 @@ function insertSample($pdo) {
         $pdo->exec("INSERT INTO Kunden (kName, kVorname, kAdresse, kOrt, kPLZ, kTelefon, kGender) VALUES 
         ('Mustermann', 'Max', 'Am Hauptplatz', 'Berlin', 8931, '0768881212', 'MALE'),
         ('Schmidt', 'Anna', 'Im Park', 'München', 123456, '0791235541', 'FEMALE'),
-        ('Fischer', 'Lisa', 'An der Kirche', 'Hamburg', 8048, '0767773214', 'FEMALE')");
+        ('Fischer', 'Lisa', 'An der Kirche', 'Hamburg', 8048, '123123211', 'FEMALE'),
+        ('SADSAD', 'Marxxx', 'Döner', 'Berrn', 12314, '14213123', 'MALE'),
+        ('FASDr', 'Sasds', 'An River', 'Saaaa', 421123, '34213', 'FEMALE')");
 
         // Insert data into Rechnung table
         $pdo->exec("INSERT INTO Rechnung (rAnrede, rName, rVorname, rAdresse, rOrt, rPLZ) VALUES 
         ('Herr', 'Mustermann', 'Max', 'Am Hauptplatz', 'Berlin', 8931),
         ('Frau', 'Schmidt', 'Anna', 'Im Park', 'München', 123456),
-        ('Frau', 'Fischer', 'Lisa', 'An der Kirche', 'Hamburg', 8048)");
+        ('Frau', 'Fischer', 'Lisa', 'An der Kirche', 'Hamburg', 8048),
+        ('Frau', 'Marxxx', 'Döner', 'Berrn', 'Berrn', 8048),
+        ('Herr', 'Sasds', 'An River', 'Saaaa', 'sdASD', 8048)");
 
         // create orderDate  format: 'dd-mm-yyyy hh:mm:ss' -> take current date
         $date = date('01-01-2021 12:00:00'); # format: 'dd-mm-yyyy hh:mm:ss'
         // Insert sample data into Orders table
         $pdo->exec("INSERT INTO Orders (kundenID, kundenName, objAdresse, objOrt, objPLZ, rechID, orderDate, reparatur, sanitaer, heizung, garantie, bemerkung, terminwunsch, zustand, arbeiterID, completed, completedDate) VALUES 
-        (1, 'Mustermann Max', 'Am Dom', 'Bern', 12324, 1, '$date', 0, 1, 0, 0, '', '', 'INPROGRESS', 1, 0, '$date'),
-        (2, 'Schmidt Anna', 'Pennymarkt', 'Tokyo', 32413, 2, '$date', 1, 0, 1, 0, '', '', 'TODO', 2, 0, '$date'),
-        (3, 'Fischer Lisa', 'Kebabladen', 'Köln', 32142, 3, '$date', 0, 1, 0, 1, '', '', 'TODO', 3, 0, '$date')");
+        (1, 'Mustermann Max', 'Am Dom', 'Bern', 12324, 1, '$date', 0, 1, 0, 0, '', '', 'INPROGRESS', 3, 0, '$date'),
+        (2, 'Schmidt Anna', 'Pennymarkt', 'Tokyo', 32413, 2, '$date', 1, 0, 1, 0, '', '', 'TODO', 3, 0, '$date'),
+        (3, 'Fischer Lisa', 'Kebabladen', 'Köln', 32142, 3, '$date', 0, 1, 1, 1, '', '', 'TODO', NULL, 0, '$date'),
+        (4, 'SADSAD Marxxx', 'Döner', 'Berrn', 12314, 4, '$date', 1, 0, 0, 1, '', '', 'TODO', NULL, 0, '$date'),
+        (5, 'FASDr Sasds', 'An River', 'Saaaa', 421123, 5, '$date', 1, 0, 0, 1, '', '', 'TODO', NULL, 0, '$date')");
     } catch (PDOException $e) {
         die($e->getMessage());
     }
