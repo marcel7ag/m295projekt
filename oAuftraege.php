@@ -19,7 +19,7 @@ $id = $_SESSION['id'];
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style/style.css">
-    <title>Alle Aufträge</title>
+    <title>Ihre Aufträge</title>
 </head>
 <body>
     <h1 style="text-align: center; margin:  10px;">Ihre offenen Aufträge</h1>
@@ -33,7 +33,7 @@ $id = $_SESSION['id'];
             <div>Heizung</div>
             <div>Garantie</div>
             <div>Zustand</div>
-            <div>Auftragdetails</div>
+            <div>Rapport</div>
         </div>
     <?php
         require 'db/conn.php';
@@ -78,7 +78,11 @@ $id = $_SESSION['id'];
                     <div>'.$heizung.'</div>
                     <div>'.$garantie.'</div>
                     <div style="color: '.$color.';">'.$zustand.'</div>
-                    <div><button class="detail-btn" data-id="'.$orderID.'">Rapport</button></div>
+                    <div>
+                    <form id="formZuteilung" style="width:auto; padding:0px;margin:0px;background-color:transparent;border:none;box-shadow:none;" method="post" action="rapporte.php">
+                        <button class="detail-btn" name="btn-id" id="btn-id" value="'.$orderID.'" data-id="'.$orderID.'">Rapport</button>
+                    </form>
+                    </div>
                 </div>';
             }
     ?>
