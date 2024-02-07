@@ -85,13 +85,12 @@ if (!isset($_SESSION["name"])) {
                             <textarea style="width:600px; height:225px;" id="report" name="report"></textarea>
                         </div>
                         <div>
-                            <button class="detail-btn" style="width:auto;display:flex;margin:auto auto;" name="btn-id" id="btn-id" value="'.$orderID.'" data-id="'.$orderID.'">abschliessen</button>
+                            <button class="detail-btn" style="width:auto;display:flex;margin:auto auto;" name="btn-idD" id="btn-id" value="'.$orderID.'" data-id="'.$orderID.'">abschliessen</button>
                         </div>
                     </div>
                     ';
     }
-
-    if (isset($_POST['btn-id'])) {
+    if (isset($_POST['btn-idD'])) {
         $Compldate = date('d-m-Y H:i:s', time());
         $orderID = $_POST['btn-id'];
         $zustand = "COMPLETED";

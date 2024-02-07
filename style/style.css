@@ -134,7 +134,7 @@ input[value="Logout"]:hover{
     align-items: center;
     background-color: #333;
     border-radius:  5px;
-    margin: 15% auto;
+    margin: auto;
     padding:  6px;
     overflow-x: auto; /* Make it scrollable if content overflows */
 }
